@@ -28,11 +28,13 @@
 #define ADDR_X_GOAL_POSITION            116
 #define ADDR_X_REALTIME_TICK            120
 #define ADDR_X_PRESENT_VELOCITY         128
+#define ADDR_X_PRESENT_CURRENT          126
 #define ADDR_X_PRESENT_POSITION         132
 
 // Limit values (XM430-W210-T and XM430-W350-T)
 #define BURGER_DXL_LIMIT_MAX_VELOCITY            265     // MAX RPM is 61 when XL is powered 12.0V
 #define WAFFLE_DXL_LIMIT_MAX_VELOCITY            330     // MAX RPM is 77 when XM is powered 12.0V
+#define WAFFLE_DXL_LIMIT_MAX_CURRENT             1,193
 
 // Data Byte Length
 #define LEN_X_TORQUE_ENABLE             1
@@ -40,6 +42,7 @@
 #define LEN_X_GOAL_POSITION             4
 #define LEN_X_REALTIME_TICK             2
 #define LEN_X_PRESENT_VELOCITY          4
+#define LEN_X_PRESENT_CURRENT           2
 #define LEN_X_PRESENT_POSITION          4
 
 #define PROTOCOL_VERSION                2.0     // Dynamixel protocol version 2.0
@@ -73,7 +76,9 @@ class Turtlebot3TorqueDriver
   bool setTorque(bool onoff);
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
+  bool readCurrent(int32_t &left_value, int32_t &right_value);
   bool writeVelocity(int64_t left_value, int64_t right_value);
+  bool writeCurrent(int64_t left_value, int64_t right_value);
   bool controlMotor(const float wheel_radius, const float wheel_separation, float* value);
 
  private:
@@ -89,7 +94,9 @@ class Turtlebot3TorqueDriver
   dynamixel::PacketHandler *packetHandler_;
 
   dynamixel::GroupSyncWrite *groupSyncWriteVelocity_;
+  dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
+  dynamixel::GroupSyncRead *groupSyncReadCurrent_;
 };
 
 #endif // TURTLEBOT3_MOTOR_DRIVER_H_
