@@ -59,6 +59,7 @@
 #define LEFT                            0
 #define RIGHT                           1
 
+//Aqui ira nuestra constante de torque/corriente una vez calculada
 #define VELOCITY_CONSTANT_VALUE         41.69988758  // V = r * w = r     *        (RPM             * 0.10472)
                                                      //           = r     * (0.229 * Goal_Velocity) * 0.10472
                                                      //
@@ -89,6 +90,8 @@ class Turtlebot3TorqueDriver
   bool torque_;
 
   uint16_t dynamixel_limit_max_velocity_;
+
+  uint16_t dynamixel_limit_max_current_;
 
   dynamixel::PortHandler *portHandler_;
   dynamixel::PacketHandler *packetHandler_;
