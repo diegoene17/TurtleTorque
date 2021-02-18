@@ -16,8 +16,8 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#ifndef TURTLEBOT3_WAFFLE_H_
-#define TURTLEBOT3_WAFFLE_H_
+#ifndef TURTLETORQUE3_WAFFLE_H_
+#define TURTLETORQUE3_WAFFLE_H_
 
 #define NAME                             "Waffle or Waffle Pi"
 

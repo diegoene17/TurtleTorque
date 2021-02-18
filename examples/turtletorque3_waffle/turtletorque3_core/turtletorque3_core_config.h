@@ -16,8 +16,8 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
 
-#ifndef TURTLEBOT3_CORE_CONFIG_H_
-#define TURTLEBOT3_CORE_CONFIG_H_
+#ifndef TURTLETORQUE3_CORE_CONFIG_H_
+#define TURTLETORQUE3_CORE_CONFIG_H_
 // #define NOETIC_SUPPORT          //uncomment this if writing code for ROS1 Noetic
 
 #include <ros.h>
@@ -199,7 +199,7 @@ static uint32_t tTime[10];
 * Declaration for motor
 *******************************************************************************/
 //Turtlebot3MotorDriver motor_driver;
-Turtletorque3MotorDriver motor_driver;
+TurtleTorque3MotorDriver motor_driver;
 
 /*******************************************************************************
 * Calculation for odometry
