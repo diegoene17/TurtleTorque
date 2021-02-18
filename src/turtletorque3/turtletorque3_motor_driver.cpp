@@ -159,7 +159,7 @@ bool TurtleTorque3MotorDriver::readEncoder(int32_t &left_value, int32_t &right_v
   return true;
 }
 
-bool Turtlebot3TorqueDriver::readCurrent(int32_t &left_value, int32_t &right_value)
+bool TurtleTorque3MotorDriver::readCurrent(int32_t &left_value, int32_t &right_value)
 {
   int dxl_comm_result = COMM_TX_FAIL;              // Communication result
   bool dxl_addparam_result = false;                // addParam result
@@ -196,7 +196,7 @@ bool Turtlebot3TorqueDriver::readCurrent(int32_t &left_value, int32_t &right_val
   return true;
 }
 
-bool Turtlebot3MotorDriver::writeCurrent(int64_t left_value, int64_t right_value)
+bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;

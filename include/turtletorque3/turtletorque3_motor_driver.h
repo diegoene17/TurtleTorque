@@ -65,11 +65,11 @@
 
 #define DEBUG_SERIAL  SerialBT2
 
-class Turtletorque3MotorDriver
+class TurtleTorque3MotorDriver
 {
  public:
-  Turtletorque3MotorDriver();
-  ~Turtletorque3MotorDriver();
+  TurtleTorque3MotorDriver();
+  ~TurtleTorque3MotorDriver();
   bool init(String turtlebot3);
   void close(void);
   bool setTorque(bool onoff);
