@@ -65,6 +65,7 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
   else if (turtlebot3 == "Waffle or Waffle Pi")
     dynamixel_limit_max_velocity_ = WAFFLE_DXL_LIMIT_MAX_VELOCITY;
+    dynamixel_limit_max_current_ = WAFFLE_DXL_LIMIT_MAX_CURRENT;
   else
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
 
