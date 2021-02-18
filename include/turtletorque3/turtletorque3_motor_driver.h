@@ -16,8 +16,8 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#ifndef TURTLEBOT3_MOTOR_DRIVER_H_
-#define TURTLEBOT3_MOTOR_DRIVER_H_
+#ifndef TURTLETORQUE3_MOTOR_DRIVER_H_
+#define TURTLETORQUE3_MOTOR_DRIVER_H_
 
 #include "variant.h"
 #include <DynamixelSDK.h>
@@ -65,11 +65,11 @@
 
 #define DEBUG_SERIAL  SerialBT2
 
-class Turtlebot3TorqueDriver
+class Turtletorque3MotorDriver
 {
  public:
-  Turtlebot3TorqueDriver();
-  ~Turtlebot3TorqueDriver();
+  Turtletorque3MotorDriver();
+  ~Turtletorque3MotorDriver();
   bool init(String turtlebot3);
   void close(void);
   bool setTorque(bool onoff);

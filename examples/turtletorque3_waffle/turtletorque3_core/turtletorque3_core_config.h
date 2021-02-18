@@ -199,7 +199,7 @@ static uint32_t tTime[10];
 * Declaration for motor
 *******************************************************************************/
 //Turtlebot3MotorDriver motor_driver;
-Turtlebot3TorqueDriver motor_driver;
+Turtletorque3MotorDriver motor_driver;
 
 /*******************************************************************************
 * Calculation for odometry
@@ -216,13 +216,13 @@ double  last_velocity[WHEEL_NUM]  = {0.0, 0.0};
 /*******************************************************************************
 * Declaration for sensors
 *******************************************************************************/
-Turtlebot3Sensor sensors;
+Turtletorque3Sensor sensors;
 
 /*******************************************************************************
 * Declaration for controllers
 *******************************************************************************/
 // Modificar eso para el nuevo controlador de ser necesario
-Turtlebot3Controller controllers;
+Turtletorque3Controller controllers;
 float zero_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_current[WHEEL_NUM] = {0.0, 0.0};
@@ -233,7 +233,7 @@ float goal_velocity_from_rc100[WHEEL_NUM] = {0.0, 0.0};
 /*******************************************************************************
 * Declaration for diagnosis
 *******************************************************************************/
-Turtlebot3Diagnosis diagnosis;
+Turtletorque3Diagnosis diagnosis;
 
 /*******************************************************************************
 * Declaration for SLAM and navigation

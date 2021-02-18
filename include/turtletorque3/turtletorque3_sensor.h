@@ -16,8 +16,8 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
 
-#ifndef TURTLEBOT3_SENSOR_H_
-#define TURTLEBOT3_SENSOR_H_
+#ifndef TURTLETORQUE3_SENSOR_H_
+#define TURTLETORQUE3_SENSOR_H_
 
 #include <IMU.h>
 
@@ -48,18 +48,18 @@ typedef struct LED_PIN_ARRAY
   int back_left;
   int back_right;
 }LedPinArray;
- 
+
 typedef struct SONAR_PIN
 {
   int trig;
   int echo;
 }SonarPin;
 
-class Turtlebot3Sensor
+class Turtletorque3Sensor
 {
  public:
-  Turtlebot3Sensor();
-  ~Turtlebot3Sensor();
+  Turtletorque3Sensor();
+  ~Turtletorque3Sensor();
 
   bool init(void);
 
@@ -80,7 +80,7 @@ class Turtlebot3Sensor
 
   // Sound
   void melody(uint16_t* note, uint8_t note_num, uint8_t* durations);
-  void makeSound(uint8_t index);  
+  void makeSound(uint8_t index);
 
   // Bumper
   void initBumper(void);
