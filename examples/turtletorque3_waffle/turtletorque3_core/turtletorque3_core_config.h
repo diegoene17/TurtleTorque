@@ -47,6 +47,8 @@
 #define CONTROL_MOTOR_TIMEOUT                  500  //ms
 #define IMU_PUBLISH_FREQUENCY                  200  //hz
 #define CMD_VEL_PUBLISH_FREQUENCY              30   //hz
+//de torque
+//#define CMD_TOR_PUBLISH_FREQUENCY              30   //hz
 #define DRIVE_INFORMATION_PUBLISH_FREQUENCY    30   //hz
 #define VERSION_INFORMATION_PUBLISH_FREQUENCY  1    //hz
 #define DEBUG_LOG_FREQUENCY                    10   //hz
@@ -72,6 +74,8 @@
 
 // Callback function prototypes
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg);
+//Callback de torque
+//void commandCurrentCallback(const geometry_msgs::Twist& cmd_tor_msg);
 void soundCallback(const turtlebot3_msgs::Sound& sound_msg);
 void motorPowerCallback(const std_msgs::Bool& power_msg);
 void resetCallback(const std_msgs::Empty& reset_msg);
@@ -221,6 +225,7 @@ Turtlebot3Sensor sensors;
 Turtlebot3Controller controllers;
 float zero_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity[WHEEL_NUM] = {0.0, 0.0};
+float goal_current[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_button[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_cmd[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_rc100[WHEEL_NUM] = {0.0, 0.0};
