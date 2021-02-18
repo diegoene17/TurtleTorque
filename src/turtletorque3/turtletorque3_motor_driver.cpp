@@ -25,7 +25,7 @@ TurtleTorque3MotorDriver::TurtleTorque3MotorDriver()
   right_wheel_id_(DXL_RIGHT_ID)
 {
   torque_ = false;
-  dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
+  dynamixel_limit_max_current_ = WAFFLE_DXL_LIMIT_MAX_CURRENT;
 }
 
 TurtleTorque3MotorDriver::~TurtleTorque3MotorDriver()
@@ -60,7 +60,7 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   groupSyncReadEncoder_   = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
   groupSyncReadCurrent_ = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
 
-  
+
   if (turtlebot3 == "Burger")
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
   else if (turtlebot3 == "Waffle or Waffle Pi")
