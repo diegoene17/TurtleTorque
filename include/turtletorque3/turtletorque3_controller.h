@@ -33,8 +33,8 @@
 class TurtleTorque3Controller
 {
  public:
-  Turtletorque3Controller();
-  ~Turtletorque3Controller();
+  TurtleTorque3Controller();
+  ~TurtleTorque3Controller();
 
   bool init(float max_lin_vel, float max_ang_vel, uint8_t scale_lin_vel = 1, uint8_t scale_ang_vel = 1);
 
