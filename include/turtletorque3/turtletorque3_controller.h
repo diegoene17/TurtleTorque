@@ -30,7 +30,7 @@
 
 #define DEBUG_SERIAL SerialBT2
 
-class Turtletorque3Controller
+class TurtleTorque3Controller
 {
  public:
   Turtletorque3Controller();

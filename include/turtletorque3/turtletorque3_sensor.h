@@ -55,7 +55,7 @@ typedef struct SONAR_PIN
   int echo;
 }SonarPin;
 
-class Turtletorque3Sensor
+class TurtleTorque3Sensor
 {
  public:
   Turtletorque3Sensor();
