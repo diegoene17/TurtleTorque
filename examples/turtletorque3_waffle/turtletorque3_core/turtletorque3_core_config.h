@@ -216,13 +216,13 @@ double  last_velocity[WHEEL_NUM]  = {0.0, 0.0};
 /*******************************************************************************
 * Declaration for sensors
 *******************************************************************************/
-Turtletorque3Sensor sensors;
+TurtleTorque3Sensor sensors;
 
 /*******************************************************************************
 * Declaration for controllers
 *******************************************************************************/
 // Modificar eso para el nuevo controlador de ser necesario
-Turtletorque3Controller controllers;
+TurtleTorque3Controller controllers;
 float zero_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_current[WHEEL_NUM] = {0.0, 0.0};
@@ -233,7 +233,7 @@ float goal_velocity_from_rc100[WHEEL_NUM] = {0.0, 0.0};
 /*******************************************************************************
 * Declaration for diagnosis
 *******************************************************************************/
-Turtletorque3Diagnosis diagnosis;
+TurtleTorque3Diagnosis diagnosis;
 
 /*******************************************************************************
 * Declaration for SLAM and navigation

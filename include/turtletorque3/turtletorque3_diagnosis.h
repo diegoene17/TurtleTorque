@@ -39,11 +39,11 @@
 
 #define DEBUG_SERIAL  SerialBT2
 
-class Turtletorque3Diagnosis
+class TurtleTorque3Diagnosis
 {
  public:
-  Turtletorque3Diagnosis();
-  ~Turtletorque3Diagnosis();
+  TurtleTorque3Diagnosis();
+  ~TurtleTorque3Diagnosis();
 
   bool init();
 

@@ -16,18 +16,18 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#include "../../include/turtlebot3/turtlebot3_diagnosis.h"
+#include "../../include/turtlebot3/turtletorque3_diagnosis.h"
 
-Turtlebot3Diagnosis::Turtlebot3Diagnosis()
+TurtleTorque3Diagnosis::TurtleTorque3Diagnosis()
 {
 }
 
-Turtlebot3Diagnosis::~Turtlebot3Diagnosis()
+TurtleTorque3Diagnosis::~TurtleTorque3Diagnosis()
 {
-  DEBUG_SERIAL.end();  
+  DEBUG_SERIAL.end();
 }
 
-bool Turtlebot3Diagnosis::init(void)
+bool TurtleTorque3Diagnosis::init(void)
 {
   DEBUG_SERIAL.begin(57600);
 
@@ -35,7 +35,7 @@ bool Turtlebot3Diagnosis::init(void)
   return true;
 }
 
-void Turtlebot3Diagnosis::showLedStatus(bool isConnected)
+void TurtleTorque3Diagnosis::showLedStatus(bool isConnected)
 {
   static uint32_t t_time = millis();
 
@@ -66,7 +66,7 @@ void Turtlebot3Diagnosis::showLedStatus(bool isConnected)
   updateRxTxLed();
 }
 
-void Turtlebot3Diagnosis::updateRxTxLed(void)
+void TurtleTorque3Diagnosis::updateRxTxLed(void)
 {
   static uint32_t rx_led_update_time;
   static uint32_t tx_led_update_time;
@@ -106,18 +106,18 @@ void Turtlebot3Diagnosis::updateRxTxLed(void)
   }
 }
 
-void Turtlebot3Diagnosis::setPowerOn(void)
+void TurtleTorque3Diagnosis::setPowerOn(void)
 {
   digitalWrite(BDPIN_DXL_PWR_EN, HIGH);
 }
 
-void Turtlebot3Diagnosis::setPowerOff(void)
+void TurtleTorque3Diagnosis::setPowerOff(void)
 {
   digitalWrite(BDPIN_DXL_PWR_EN, LOW);
 }
 
-uint8_t Turtlebot3Diagnosis::updateVoltageCheck(bool check_setup)
-{  
+uint8_t TurtleTorque3Diagnosis::updateVoltageCheck(bool check_setup)
+{
   static uint8_t battery_voltage     = 0;
   static float   battery_valtage_raw = 0;
   static uint8_t battery_state       = BATTERY_POWER_OFF;
@@ -293,7 +293,7 @@ uint8_t Turtlebot3Diagnosis::updateVoltageCheck(bool check_setup)
   return battery_state;
 }
 
-uint8_t Turtlebot3Diagnosis::getButtonPress(uint16_t time_to_press)
+uint8_t TurtleTorque3Diagnosis::getButtonPress(uint16_t time_to_press)
 {
   uint8_t button_state = 0;
   static uint32_t t_time[2];
