@@ -36,7 +36,7 @@
 #include <turtlebot3_msgs/VersionInfo.h>
 
 //Cambiar nombre a estos, para evitar los problemas de viejas librerias
-#include <TurtleBot3.h>
+#include <TurtleTorque3.h>
 #include "turtlebot3_waffle.h"
 
 #include <math.h>
@@ -217,6 +217,7 @@ Turtlebot3Sensor sensors;
 /*******************************************************************************
 * Declaration for controllers
 *******************************************************************************/
+// Modificar eso para el nuevo controlador de ser necesario
 Turtlebot3Controller controllers;
 float zero_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity[WHEEL_NUM] = {0.0, 0.0};
