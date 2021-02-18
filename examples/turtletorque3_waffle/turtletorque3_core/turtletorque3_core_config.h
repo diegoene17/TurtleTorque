@@ -37,7 +37,7 @@
 
 //Cambiar nombre a estos, para evitar los problemas de viejas librerias
 #include <TurtleTorque3.h>
-#include "turtlebot3_waffle.h"
+#include "turtletorque3_waffle.h"
 
 #include <math.h>
 
