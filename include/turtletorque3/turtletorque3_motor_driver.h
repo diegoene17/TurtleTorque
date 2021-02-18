@@ -25,6 +25,7 @@
 // Control table address (Dynamixel X-series)
 #define ADDR_X_TORQUE_ENABLE            64
 #define ADDR_X_GOAL_VELOCITY            104
+#define ADDR_X_GOAL_CURRENT             102
 #define ADDR_X_GOAL_POSITION            116
 #define ADDR_X_REALTIME_TICK            120
 #define ADDR_X_PRESENT_VELOCITY         128
@@ -37,6 +38,7 @@
 // Data Byte Length
 #define LEN_X_TORQUE_ENABLE             1
 #define LEN_X_GOAL_POSITION             4
+#define LEN_X_GOAL_CURRENT              2
 #define LEN_X_REALTIME_TICK             2
 #define LEN_X_PRESENT_CURRENT           2
 #define LEN_X_PRESENT_POSITION          4
@@ -75,7 +77,7 @@ class Turtlebot3TorqueDriver
   bool readEncoder(int32_t &left_value, int32_t &right_value);
   bool readCurrent(int32_t &left_value, int32_t &right_value);
   bool writeVelocity(int64_t left_value, int64_t right_value);
-  bool writeCurrent(int64_t left_value, int64_t right_value);
+  bool writeCurrent(int64_t left_value, int64_t right_value);                   //No sabemos si es int64 o int32
   bool controlMotor(const float wheel_radius, const float wheel_separation, float* value);
 
  private:
@@ -86,7 +88,6 @@ class Turtlebot3TorqueDriver
   bool torque_;
 
   uint16_t dynamixel_limit_max_velocity_;
-
   uint16_t dynamixel_limit_max_current_;
 
   dynamixel::PortHandler *portHandler_;
