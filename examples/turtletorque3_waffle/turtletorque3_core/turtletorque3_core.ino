@@ -83,14 +83,7 @@ void loop()
 
   if ((t-tTime[0]) >= (1000 / CONTROL_MOTOR_SPEED_FREQUENCY))
   {
-    updateGoalVelocity();
-    if ((t-tTime[6]) > CONTROL_MOTOR_TIMEOUT)
-    {
-      motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, zero_velocity);
-    }
-    else {
-      motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, goal_velocity);
-    }
+
     tTime[0] = t;
   }
 
@@ -164,8 +157,9 @@ void loop()
 }
 
 /*******************************************************************************
-* Callback function for cmd_vel msg
+* Callback function for cmd_vel msg al final sera cmd_tor msg
 *******************************************************************************/
+/*
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 {
   goal_velocity_from_cmd[LINEAR]  = cmd_vel_msg.linear.x;
@@ -176,6 +170,10 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   tTime[6] = millis();
 }
 
+void commandTorqueCallback(const msg){
+  //loque vaya aqui
+}
+*/
 /*******************************************************************************
 * Callback function for sound msg
 *******************************************************************************/
