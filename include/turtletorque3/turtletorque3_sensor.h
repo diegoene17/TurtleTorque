@@ -58,8 +58,8 @@ typedef struct SONAR_PIN
 class TurtleTorque3Sensor
 {
  public:
-  Turtletorque3Sensor();
-  ~Turtletorque3Sensor();
+  TurtleTorque3Sensor();
+  ~TurtleTorque3Sensor();
 
   bool init(void);
 
