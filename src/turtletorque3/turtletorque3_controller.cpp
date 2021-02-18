@@ -16,7 +16,7 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#include "../../include/turtlebot3/turtlebot3_controller.h"
+#include "../../include/turtletorque3/turtletorque3_controller.h"
 
 TurtleTorque3Controller::TurtleTorque3Controller()
 {

@@ -16,7 +16,7 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#include "../../include/turtlebot3/turtletorque3_diagnosis.h"
+#include "../../include/turtletorque3/turtletorque3_diagnosis.h"
 
 TurtleTorque3Diagnosis::TurtleTorque3Diagnosis()
 {

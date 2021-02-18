@@ -16,7 +16,7 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
 
-#include "../../include/turtlebot3/turtlebot3_sensor.h"
+#include "../../include/turtletorque3/turtletorque3_sensor.h"
 
 TurtleTorque3Sensor::TurtleTorque3Sensor()
 {
