@@ -21,6 +21,7 @@
 
 #include "variant.h"
 #include <DynamixelSDK.h>
+#include <geometry_msgs/Wrench.h>
 
 // Control table address (Dynamixel X-series)
 #define ADDR_X_TORQUE_ENABLE            64
