@@ -169,16 +169,11 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   tTime[6] = millis();
 }
-*/
 
-void commandTorqueCallback(const geometry_msg::Wrench& cmd_tor_msg){
+void commandTorqueCallback(const msg){
   //loque vaya aqui
-  goal_current_from_cmd[TORQUE]  = cmd_tor_msg.torque.z;
-
-  goal_current_from_cmd[TORQUE]  = constrain(goal_current_from_cmd[Torque],  MIN_CURRENT, MAX_CURRENT);
-  tTime[6] = millis();
 }
-
+*/
 /*******************************************************************************
 * Callback function for sound msg
 *******************************************************************************/
@@ -593,6 +588,7 @@ void driveTest(uint8_t buttons)
   {
     if (abs(saved_tick[RIGHT] - current_tick[RIGHT]) <= diff_encoder)
     {
+      //
       goal_velocity_from_button[LINEAR]  = 0.05;
       tTime[6] = millis();
     }
@@ -815,13 +811,6 @@ void updateGoalVelocity(void)
   sensors.setLedPattern(goal_velocity[LINEAR], goal_velocity[ANGULAR]);
 }
 
-void updateGoalCurrent(void)
-{
-  goal_current = goal_current_from_cmd;
-
-  //sensors.setLedPattern(goal_velocity[LINEAR], goal_velocity[ANGULAR]);
-}
-
 /*******************************************************************************
 * Send Debug data
 *******************************************************************************/
@@ -859,6 +848,12 @@ void sendDebuglog(void)
 
   DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
   DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
+
+  int32_t current[WHEEL_NUM] = {0, 0};
+  motor_driver.readCurrent(current[LEFT], current[RIGHT]);
+
+  DEBUG_SERIAL.println("Current(left) : " + String(current[LEFT]));
+  DEBUG_SERIAL.println("Current(right) : " + String(current[RIGHT]));
 
   DEBUG_SERIAL.println("---------------------------------------");
   DEBUG_SERIAL.println("TurtleBot3");
