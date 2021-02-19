@@ -34,6 +34,8 @@
 
 // Limit values (XM430-W210-T and XM430-W350-T)
 #define WAFFLE_DXL_LIMIT_MAX_CURRENT             1193
+#define BURGER_DXL_LIMIT_MAX_VELOCITY            265     // MAX RPM is 61 when XL is powered 12.0V
+#define WAFFLE_DXL_LIMIT_MAX_VELOCITY            330     // MAX RPM is 77 when XM is powered 12.0V
 
 // Data Byte Length
 #define LEN_X_TORQUE_ENABLE             1

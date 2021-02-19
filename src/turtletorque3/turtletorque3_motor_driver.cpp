@@ -60,15 +60,15 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   groupSyncReadEncoder_   = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
   groupSyncReadCurrent_ = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
 
-
-  if (turtlebot3 == "Burger")
+  if (turtlebot3 == "Burger"){
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
-  else if (turtlebot3 == "Waffle or Waffle Pi")
+  } else if (turtlebot3 == "Waffle or Waffle Pi") {
     dynamixel_limit_max_velocity_ = WAFFLE_DXL_LIMIT_MAX_VELOCITY;
     dynamixel_limit_max_current_ = WAFFLE_DXL_LIMIT_MAX_CURRENT;
-  else
+  } else {
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
-
+  }
+  
   DEBUG_SERIAL.println("Success to init Motor Driver");
   return true;
 }
