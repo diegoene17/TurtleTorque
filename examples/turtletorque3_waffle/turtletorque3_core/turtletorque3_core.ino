@@ -175,7 +175,8 @@ void commandTorqueCallback(const geometry_msg::Wrench& cmd_tor_msg){
   //loque vaya aqui
   goal_current_from_cmd[TORQUE]  = cmd_tor_msg.torque.z;
 
-  goal_current_from_cmd[TORQUE]  = constrain(goal_current_from_cmd[Torque],  MIN_LINEAR_VELOCITY, MAX_LINEAR_VELOCITY);
+  goal_current_from_cmd[TORQUE]  = constrain(goal_current_from_cmd[Torque],  MIN_CURRENT, MAX_CURRENT);
+  tTime[6] = millis();
 }
 
 /*******************************************************************************
