@@ -588,6 +588,7 @@ void driveTest(uint8_t buttons)
   {
     if (abs(saved_tick[RIGHT] - current_tick[RIGHT]) <= diff_encoder)
     {
+      //
       goal_velocity_from_button[LINEAR]  = 0.05;
       tTime[6] = millis();
     }
@@ -844,6 +845,12 @@ void sendDebuglog(void)
 
   int32_t encoder[WHEEL_NUM] = {0, 0};
   motor_driver.readEncoder(encoder[LEFT], encoder[RIGHT]);
+
+  DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
+  DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
+
+  int32_t current[WHEEL_NUM] = {0, 0};
+  motor_driver.readCurrent(current[LEFT], current[RIGHT]);
 
   DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
   DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
