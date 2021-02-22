@@ -174,7 +174,7 @@ void commandTorqueCallback(const geometry_msgs::Wrench& cmd_tor_msg)
 {
   //loque vaya aqui
   goal_torque_from_cmd[TORQUE] = cmd_tor_msg.torque.z;
-  goal_torque_from_cmd[TORQUE] = constrain(goal_torque_from_cmd[TORQUE], MIN_TORQUE, MAX_TORQUE);
+  goal_torque_from_cmd[TORQUE] = constrain(goal_torque_from_cmd[TORQUE], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   tTime[6] = millis();
 }
 /*******************************************************************************
