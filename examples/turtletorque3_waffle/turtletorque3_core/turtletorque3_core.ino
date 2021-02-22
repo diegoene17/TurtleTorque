@@ -169,15 +169,14 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   tTime[6] = millis();
 }
-
+*/
 void commandTorqueCallback(const geometry_msgs::Wrench& cmd_tor_msg)
 {
   //loque vaya aqui
-  goal_torque_from_cmd = cmd_vel_msg.angular.z;
-  goal_torque_from_cmd = constrain(goal_torque_from_cmd, MIN_ANGULAR_TORQUE, MAX_ANGULAR_TORQUE);
+  goal_torque_from_cmd[TORQUE] = cmd_tor_msg.torque.z;
+  goal_torque_from_cmd[TORQUE] = constrain(goal_torque_from_cmd[TORQUE], MIN_ANGULAR_TORQUE, MAX_ANGULAR_TORQUE);
   tTime[6] = millis();
 }
-*/
 /*******************************************************************************
 * Callback function for sound msg
 *******************************************************************************/
