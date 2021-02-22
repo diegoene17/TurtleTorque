@@ -40,6 +40,8 @@ void setup()
   nh.advertise(version_info_pub);
   nh.advertise(imu_pub);
   nh.advertise(cmd_vel_rc100_pub);
+  //Torque
+  nh.advertise(cmd_tor_pub);
   nh.advertise(odom_pub);
   nh.advertise(joint_states_pub);
   nh.advertise(battery_state_pub);
@@ -228,6 +230,17 @@ void publishCmdVelFromRC100Msg(void)
 
   cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
 }
+
+/*******************************************************************************
+* Publish msgs (CMD Torque data)
+*******************************************************************************/
+void publishCmdTor(void)
+{
+  cmd_tor_msg.torque.z  = goal_torque_from_cmd[TORQUE];
+
+  cmd_tor_pub.publish(&cmd_tor_msg);
+}
+
 
 /*******************************************************************************
 * Publish msgs (IMU data: angular velocity, linear acceleration, orientation)
