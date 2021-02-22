@@ -68,7 +68,7 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   } else {
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
   }
-  
+
   DEBUG_SERIAL.println("Success to init Motor Driver");
   return true;
 }
@@ -231,5 +231,11 @@ bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_va
   }
 
   groupSyncWriteCurrent_->clearParam();
+  return true;
+}
+
+bool TurtleTorque3MotorDriver::controlMotor(void)
+{
+  
   return true;
 }
