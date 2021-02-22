@@ -138,8 +138,7 @@ char joint_state_header_frame_id[30];
 //ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
 
-//ros::Subscriber<geometry_msgs::Wrench> cmd_tor_sub("cmd_tor", commandTorqueCallback);
-//Crear el tipo de msgs corriente
+ros::Subscriber<geometry_msgs::Wrench> cmd_tor_sub("cmd_tor", commandTorqueCallback);
 
 ros::Subscriber<turtlebot3_msgs::Sound> sound_sub("sound", soundCallback);
 
