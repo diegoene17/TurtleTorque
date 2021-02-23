@@ -85,7 +85,14 @@ void loop()
 
   if ((t-tTime[0]) >= (1000 / CONTROL_MOTOR_SPEED_FREQUENCY))
   {
-
+    //updateGoalTorque()?¿?¿;
+    if ((t-tTime[6]) > CONTROL_MOTOR_TIMEOUT)
+    {
+      //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, zero_velocity);
+    }
+    else {
+      //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, goal_velocity);
+    }
     tTime[0] = t;
   }
 
@@ -230,13 +237,13 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 /*******************************************************************************
 * Publish msgs (CMD Velocity data from RC100 : angular velocity, linear velocity)
 *******************************************************************************/
-void publishCmdVelFromRC100Msg(void)
+/*void publishCmdVelFromRC100Msg(void)
 {
   cmd_vel_rc100_msg.linear.x  = goal_velocity_from_rc100[LINEAR];
   cmd_vel_rc100_msg.angular.z = goal_velocity_from_rc100[ANGULAR];
 
   cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
-}
+}*/
 
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
