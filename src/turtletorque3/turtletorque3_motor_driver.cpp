@@ -236,6 +236,7 @@ bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_va
 
 bool TurtleTorque3MotorDriver::controlMotor(void)
 {
-  
+  bool dxl_comm_result = false;
+
   return true;
 }
