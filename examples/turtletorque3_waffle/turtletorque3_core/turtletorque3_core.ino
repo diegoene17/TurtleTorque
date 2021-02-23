@@ -176,9 +176,13 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 */
 void commandTorqueCallback(const geometry_msgs::Wrench& cmd_tor_msg)
 {
-  //loque vaya aqui
   goal_torque_from_cmd[TORQUE] = cmd_tor_msg.torque.z;
   goal_torque_from_cmd[TORQUE] = constrain(goal_torque_from_cmd[TORQUE], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
+
+  char log_msg[50];
+  sprintf(log_msg, "%i", goal_torque_from_cmd[TORQUE]);
+  nh.loginfo(log_msg);
+  
   tTime[6] = millis();
 }
 /*******************************************************************************
