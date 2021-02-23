@@ -93,7 +93,8 @@ void loop()
   {
     //Podriamos matar el control con el mando y meter aqui el publishCmdTor
     //SIMON
-    publishCmdVelFromRC100Msg();
+    publishCmdTor();
+    //publishCmdVelFromRC100Msg();
     tTime[1] = t;
   }
 
@@ -182,7 +183,7 @@ void commandTorqueCallback(const geometry_msgs::Wrench& cmd_tor_msg)
   char log_msg[50];
   sprintf(log_msg, "%i", goal_torque_from_cmd[TORQUE]);
   nh.loginfo(log_msg);
-  
+
   tTime[6] = millis();
 }
 /*******************************************************************************
