@@ -91,6 +91,7 @@ void loop()
 
   if ((t-tTime[1]) >= (1000 / CMD_VEL_PUBLISH_FREQUENCY))
   {
+    //Podriamos matar el control con el mando y meter aqui el publishCmdTor
     publishCmdVelFromRC100Msg();
     tTime[1] = t;
   }
