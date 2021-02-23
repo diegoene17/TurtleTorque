@@ -241,6 +241,8 @@ bool TurtleTorque3MotorDriver::controlMotor(int64_t left_value, int64_t right_va
   int64_t right_current_value = 0;
 
 //Aqui ira la multiplicación por la constante de torque
+  left_current_value = left_value;
+  right_current_value = right_value;
 
   dxl_comm_result = writeCurrent(left_current_value, right_current_value);
   if(dxl_comm_result == false)
