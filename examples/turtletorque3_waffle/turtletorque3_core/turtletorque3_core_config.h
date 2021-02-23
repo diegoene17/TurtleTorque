@@ -168,6 +168,10 @@ ros::Publisher imu_pub("imu", &imu_msg);
 geometry_msgs::Twist cmd_vel_rc100_msg;
 ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
+// Command torque of Turtlebot3
+geometry_msgs::Wrench cmd_tor_msg;
+ros::Publisher cmd_tor_pub("cmd_tor", &cmd_tor_msg);
+
 // Odometry of Turtlebot3
 nav_msgs::Odometry odom;
 ros::Publisher odom_pub("odom", &odom);
