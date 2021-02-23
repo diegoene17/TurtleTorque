@@ -182,13 +182,25 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   tTime[6] = millis();
 }
 */
-void commandTorqueCallback(const geometry_msgs::Wrench& cmd_tor_msg)
+void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 {
-  goal_torque_from_cmd[TORQUE] = cmd_tor_msg.torque.z;
-  goal_torque_from_cmd[TORQUE] = constrain(goal_torque_from_cmd[TORQUE], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
+  const geometry_msgs::Wrench &lefth_value = cmd_tor_msg->wrenches[LEFT];
+  const geometry_msgs::Wrench &right_value = cmd_tor_msg->wrenches[RIGHT];
 
+
+
+  //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
+  //deberia ser multiplicado por la cosntante o bien la operación necesaria
+  goal_current_from_cmd[LEFT] = left_value.torque.z;
+  goal_current_from_cmd[RIGHT] = right_value.torque.z;
+
+  //Mantiene la variable dentro de los limites
+  goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
+  goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
+
+  //Quitar una vez comprobando funcionamiento
   char log_msg[50];
-  sprintf(log_msg, "%i", goal_torque_from_cmd[TORQUE]);
+  sprintf(log_msg, "left: %.2f , right: %.2f", goal_torque_from_cmd[LEFT],goal_torque_from_cmd[RIGHT]);
   nh.loginfo(log_msg);
 
   tTime[6] = millis();

@@ -140,8 +140,7 @@ char joint_state_header_frame_id[30];
 *******************************************************************************/
 //ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
-
-ros::Subscriber<geometry_msgs::Wrench> cmd_tor_sub("cmd_tor", commandTorqueCallback);
+ros::Subscriber<turtlebot3_msgs::WrenchArray> cmd_tor_sub("cmd_tor", commandTorqueCallback);
 
 ros::Subscriber<turtlebot3_msgs::Sound> sound_sub("sound", soundCallback);
 
@@ -237,7 +236,7 @@ float goal_velocity[WHEEL_NUM] = {0.0, 0.0};
 float goal_current[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_button[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_cmd[WHEEL_NUM] = {0.0, 0.0};
-float goal_torque_from_cmd[WHEEL_NUM] = {0.0, 0.0};
+float goal_current_from_cmd[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_rc100[WHEEL_NUM] = {0.0, 0.0};
 
 /*******************************************************************************
