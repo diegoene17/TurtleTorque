@@ -2,3 +2,4 @@
 #include "turtletorque3_sensor.h"
 #include "turtletorque3_controller.h"
 #include "turtletorque3_diagnosis.h"
+#include "WrenchArray.h"
