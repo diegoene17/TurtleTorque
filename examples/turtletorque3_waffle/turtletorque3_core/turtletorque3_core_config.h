@@ -35,6 +35,8 @@
 #include <turtlebot3_msgs/Sound.h>
 #include <turtlebot3_msgs/VersionInfo.h>
 
+#include "turtletorque3_msgs/wrench_array.h"
+
 //Cambiar nombre a estos, para evitar los problemas de viejas librerias
 #include <TurtleTorque3.h>
 #include "turtletorque3_waffle.h"
