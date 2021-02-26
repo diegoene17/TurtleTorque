@@ -89,6 +89,7 @@ void loop()
     if ((t-tTime[6]) > CONTROL_MOTOR_TIMEOUT)
     {
       //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, zero_velocity);
+        motor_driver.controlMotor(goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
     }
     else {
       //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, goal_velocity);
@@ -189,8 +190,11 @@ void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
   //deberia ser multiplicado por la cosntante o bien la operación necesaria
-  goal_current_from_cmd[LEFT] = left_value.torque.z;
-  goal_current_from_cmd[RIGHT] = right_value.torque.z;
+
+  //Esta sección cambia de float a los enteros necesarios para el control
+
+  goal_current_from_cmd[LEFT] = round(left_value.torque.z * (1193/2.69));
+  goal_current_from_cmd[RIGHT] = round(right_value.torque.z * (1193/2.69));
 
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
