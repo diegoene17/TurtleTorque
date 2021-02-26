@@ -89,10 +89,11 @@ void loop()
     if ((t-tTime[6]) > CONTROL_MOTOR_TIMEOUT)
     {
       //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, zero_velocity);
-        motor_driver.controlMotor(goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
+        motor_driver.controlMotor(0,0);
     }
     else {
       //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, goal_velocity);
+        motor_driver.controlMotor(goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
     }
     tTime[0] = t;
   }
