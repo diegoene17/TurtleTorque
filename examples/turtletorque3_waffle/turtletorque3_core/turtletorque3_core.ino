@@ -260,9 +260,9 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 *******************************************************************************/
 void publishCmdTor(void)
 {
-  cmd_tor_msg.torque.z  = goal_torque_from_cmd[TORQUE];
+  //cmd_tor_msg.torque.z  = goal_current_from_cmd[TORQUE];
 
-  cmd_tor_pub.publish(&cmd_tor_msg);
+  //cmd_tor_pub.publish(&cmd_tor_msg);
 }
 
 
