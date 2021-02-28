@@ -194,8 +194,8 @@ void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 
   //Esta sección cambia de float a los enteros necesarios para el control
 
-  goal_current_from_cmd[LEFT] = round(left_value.torque.z * (1193/2.69));
-  goal_current_from_cmd[RIGHT] = round(right_value.torque.z * (1193/2.69));
+  goal_current_from_cmd[LEFT] = round(left_value.torque.z * CURRENT_INTEGER_RATIO);
+  goal_current_from_cmd[RIGHT] = round(right_value.torque.z * CURRENT_INTEGER_RATIO);
 
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
