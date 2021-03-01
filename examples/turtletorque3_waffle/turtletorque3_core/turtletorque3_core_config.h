@@ -170,7 +170,7 @@ geometry_msgs::Twist cmd_vel_rc100_msg;
 ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
 // Command torque of Turtlebot3
-geometry_msgs::Wrench cmd_tor_msg;
+turtlebot3_msgs::WrenchArray cmd_tor_msg;
 ros::Publisher cmd_tor_pub("cmd_tor", &cmd_tor_msg);
 
 // Odometry of Turtlebot3
