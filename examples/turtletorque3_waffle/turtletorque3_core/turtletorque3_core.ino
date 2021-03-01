@@ -190,8 +190,8 @@ void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
   //deberia ser multiplicado por la cosntante o bien la operación necesaria
-  goal_current_from_cmd[LEFT] = left_value.torque.z;
-  goal_current_from_cmd[RIGHT] = right_value.torque.z;
+  goal_current_from_cmd[LEFT] = round(left_value.torque.z * CURRENT_INTEGER_RATIO);
+  goal_current_from_cmd[RIGHT] = round(right_value.torque.z * CURRENT_INTEGER_RATIO);
 
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
