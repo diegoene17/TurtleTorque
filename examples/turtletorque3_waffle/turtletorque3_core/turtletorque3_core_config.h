@@ -87,7 +87,8 @@ void motorPowerCallback(const std_msgs::Bool& power_msg);
 void resetCallback(const std_msgs::Empty& reset_msg);
 
 // Function prototypes
-void publishCmdVelFromRC100Msg(void);
+//void publishCmdVelFromRC100Msg(void);
+void publishCmdTor(void);
 void publishImuMsg(void);
 void publishMagMsg(void);
 void publishSensorStateMsg(void);

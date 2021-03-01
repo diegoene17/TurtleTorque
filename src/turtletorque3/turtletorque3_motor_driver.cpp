@@ -240,7 +240,7 @@ bool TurtleTorque3MotorDriver::controlMotor(int64_t left_value, int64_t right_va
   int64_t left_current_value = 0;
   int64_t right_current_value = 0;
   //Aqui iria el controlador en caso de ser necesario
-  
+
   dxl_comm_result = writeCurrent(left_current_value, right_current_value);
   if(dxl_comm_result == false)
     return false;

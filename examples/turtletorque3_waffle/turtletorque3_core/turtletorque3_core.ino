@@ -89,11 +89,9 @@ void loop()
     if ((t-tTime[6]) > CONTROL_MOTOR_TIMEOUT)
     {
       //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, zero_velocity);
-        motor_driver.controlMotor(0,0);
     }
     else {
       //motor_driver.controlMotor(WHEEL_RADIUS, WHEEL_SEPARATION, goal_velocity);
-        motor_driver.controlMotor(goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
     }
     tTime[0] = t;
   }
@@ -186,16 +184,14 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 */
 void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 {
-  geometry_msgs::Wrench left_value = cmd_tor_msg.wrenches[LEFT];
-  geometry_msgs::Wrench right_value = cmd_tor_msg.wrenches[RIGHT];
+  const geometry_msgs::Wrench &lefth_value = cmd_tor_msg->wrenches[LEFT];
+  const geometry_msgs::Wrench &right_value = cmd_tor_msg->wrenches[RIGHT];
+
 
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
   //deberia ser multiplicado por la cosntante o bien la operación necesaria
-
-  //Esta sección cambia de float a los enteros necesarios para el control
-
-  goal_current_from_cmd[LEFT] = round(left_value.torque.z * CURRENT_INTEGER_RATIO);
-  goal_current_from_cmd[RIGHT] = round(right_value.torque.z * CURRENT_INTEGER_RATIO);
+  goal_current_from_cmd[LEFT] = left_value.torque.z;
+  goal_current_from_cmd[RIGHT] = right_value.torque.z;
 
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
@@ -203,7 +199,7 @@ void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 
   //Quitar una vez comprobando funcionamiento
   char log_msg[50];
-  sprintf(log_msg, "left: %.2f , right: %.2f", goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
+  sprintf(log_msg, "left: %.2f , right: %.2f", goal_torque_from_cmd[LEFT],goal_torque_from_cmd[RIGHT]);
   nh.loginfo(log_msg);
 
   tTime[6] = millis();
@@ -263,11 +259,13 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
 *******************************************************************************/
+
 void publishCmdTor(void)
 {
-  //cmd_tor_msg.torque.z  = goal_current_from_cmd[TORQUE];
+  cmd_vel_rc100_msg.left_value.torque.z  = goal_torque_from_cmd[LEFT] / INTEGER_CURRENT_RATIO;
+  cmd_vel_rc100_msg.right_value.torque.z  = goal_torque_from_cmd[RIGHT] / INTEGER_CURRENT_RATIO;
 
-  //cmd_tor_pub.publish(&cmd_tor_msg);
+  cmd_tor_pub.publish(&cmd_tor_msg);
 }
 
 
