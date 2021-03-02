@@ -196,12 +196,6 @@ void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
-
-  //Quitar una vez comprobando funcionamiento
-  //char log_msg[50];
-  //sprintf(log_msg, "left: %.2f , right: %.2f", goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
-  //nh.loginfo(log_msg);
-  sensors.makeSound(sound_msg.value);
   tTime[6] = millis();
 }
 /*******************************************************************************
