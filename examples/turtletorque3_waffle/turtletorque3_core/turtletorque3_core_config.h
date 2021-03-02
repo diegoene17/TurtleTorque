@@ -46,7 +46,7 @@
 #define FIRMWARE_VER "1.2.6"
 
 #define CONTROL_MOTOR_SPEED_FREQUENCY          30   //hz
-#define CONTROL_MOTOR_TIMEOUT                  500  //ms
+#define CONTROL_MOTOR_TIMEOUT                  2000  //ms
 #define IMU_PUBLISH_FREQUENCY                  200  //hz
 #define CMD_VEL_PUBLISH_FREQUENCY              30   //hz
 //de torque
