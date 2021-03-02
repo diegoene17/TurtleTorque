@@ -184,8 +184,8 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 */
 void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
 {
-  const geometry_msgs::Wrench &lefth_value = cmd_tor_msg->wrenches[LEFT];
-  const geometry_msgs::Wrench &right_value = cmd_tor_msg->wrenches[RIGHT];
+  const geometry_msgs::Wrench &lefth_value = cmd_tor_msg.wrenches[LEFT];
+  const geometry_msgs::Wrench &right_value = cmd_tor_msg.wrenches[RIGHT];
 
 
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
