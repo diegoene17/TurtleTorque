@@ -198,10 +198,10 @@ void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
 
   //Quitar una vez comprobando funcionamiento
-  char log_msg[50];
-  sprintf(log_msg, "left: %.2f , right: %.2f", goal_current_from_cmd[LEFT],goalcurrent_from_cmd[RIGHT]);
-  nh.loginfo(log_msg);
-
+  //char log_msg[50];
+  //sprintf(log_msg, "left: %.2f , right: %.2f", goal_current_from_cmd[LEFT],goal_current_from_cmd[RIGHT]);
+  //nh.loginfo(log_msg);
+  sensors.makeSound(sound_msg.value);
   tTime[6] = millis();
 }
 /*******************************************************************************
@@ -260,13 +260,13 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 * Publish msgs (CMD Torque data)
 *******************************************************************************/
 
-/*void publishCmdTor(void)
+void publishCmdTor(void)
 {
-  cmd_tor_msg.left_value.torque.z  = goal_torque_from_cmd[LEFT] / INTEGER_CURRENT_RATIO;
-  cmd_tor_msg.right_value.torque.z  = goal_torque_from_cmd[RIGHT] / INTEGER_CURRENT_RATIO;
+  //cmd_tor_msg.left_value.torque.z  = goal_torque_from_cmd[LEFT] / INTEGER_CURRENT_RATIO;
+  //cmd_tor_msg.right_value.torque.z  = goal_torque_from_cmd[RIGHT] / INTEGER_CURRENT_RATIO;
 
-  cmd_tor_pub.publish(&cmd_tor_msg);
-}*/
+  //cmd_tor_pub.publish(&cmd_tor_msg);
+}
 
 
 /*******************************************************************************
