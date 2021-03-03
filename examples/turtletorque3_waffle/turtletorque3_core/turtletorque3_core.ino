@@ -256,10 +256,11 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 
 void publishCmdTor(void)
 {
-  //cmd_tor_msg.left_value.torque.z  = goal_torque_from_cmd[LEFT] / INTEGER_CURRENT_RATIO;
-  //cmd_tor_msg.right_value.torque.z  = goal_torque_from_cmd[RIGHT] / INTEGER_CURRENT_RATIO;
 
-  //cmd_tor_pub.publish(&cmd_tor_msg);
+  cmd_tor_msg.wrenches[0].torque.z = goal_current_from_cmd[LEFT] / INTEGER_CURRENT_RATIO;
+  cmd_tor_msg.wrenches[1].torque.z = goal_current_from_cmd[RIGHT] / INTEGER_CURRENT_RATIO;
+
+  cmd_tor_pub.publish(&cmd_tor_msg);
 }
 
 
