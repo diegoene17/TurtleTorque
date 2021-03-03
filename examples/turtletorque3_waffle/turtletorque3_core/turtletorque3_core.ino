@@ -268,7 +268,7 @@ void publishCmdTor(void)
   }
   else
   {
-    return
+    return;
   }
 }
 
