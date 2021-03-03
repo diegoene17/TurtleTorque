@@ -256,11 +256,20 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 
 void publishCmdTor(void)
 {
+  bool dxl_comm_result = false;
 
-  cmd_tor_msg.wrenches[0].torque.z = goal_current_from_cmd[LEFT] / INTEGER_CURRENT_RATIO;
-  cmd_tor_msg.wrenches[1].torque.z = goal_current_from_cmd[RIGHT] / INTEGER_CURRENT_RATIO;
+  dxl_comm_result = motor_driver.readCurrent(cmd_tor_msg.wrenches[0].torque.z, cmd_tor_msg.wrenches[1].torque.z);
 
-  cmd_tor_pub.publish(&cmd_tor_msg);
+  if (dxl_comm_result = TRUE)
+  {
+    cmd_tor_msg.wrenches[0].torque.z = cmd_tor_msg.wrenches[0].torque.z / INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.wrenches[1].torque.z = cmd_tor_msg.wrenches[1].torque.z / INTEGER_CURRENT_RATIO;
+    cmd_tor_pub.publish(&cmd_tor_msg);
+  }
+  else
+  {
+    return false;
+  }
 }
 
 
