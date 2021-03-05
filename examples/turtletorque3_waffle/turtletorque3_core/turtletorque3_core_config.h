@@ -35,7 +35,7 @@
 #include <turtlebot3_msgs/Sound.h>
 #include <turtlebot3_msgs/VersionInfo.h>
 
-#include <turtlebot3_msgs/WrenchArray.h>
+#include <turtlebot3_msgs/Torque.h>
 
 //Cambiar nombre a estos, para evitar los problemas de viejas librerias
 #include <TurtleTorque3.h>
@@ -80,7 +80,7 @@
 // Callback function prototypes
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg);
 //Callback de torque
-void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg);
+void commandTorqueCallback(const turtlebot3_msgs::Torque& cmd_tor_msg);
 //void commandCurrentCallback(const geometry_msgs::Twist& cmd_tor_msg);
 void soundCallback(const turtlebot3_msgs::Sound& sound_msg);
 void motorPowerCallback(const std_msgs::Bool& power_msg);
@@ -143,7 +143,7 @@ char joint_state_header_frame_id[30];
 *******************************************************************************/
 //ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
-ros::Subscriber<turtlebot3_msgs::WrenchArray> cmd_tor_sub("cmd_tor", commandTorqueCallback);
+ros::Subscriber<turtlebot3_msgs::Torque> cmd_tor_sub("cmd_tor", commandTorqueCallback);
 
 ros::Subscriber<turtlebot3_msgs::Sound> sound_sub("sound", soundCallback);
 
@@ -171,7 +171,7 @@ geometry_msgs::Twist cmd_vel_rc100_msg;
 ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
 // Command torque of Turtlebot3
-turtlebot3_msgs::WrenchArray cmd_tor_msg;
+turtlebot3_msgs::Torque cmd_tor_msg;
 ros::Publisher tor_pub("tor", &cmd_tor_msg);
 
 // Odometry of Turtlebot3

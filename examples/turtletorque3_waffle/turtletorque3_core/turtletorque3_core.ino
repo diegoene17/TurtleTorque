@@ -182,16 +182,16 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   tTime[6] = millis();
 }
 */
-void commandTorqueCallback(const turtlebot3_msgs::WrenchArray& cmd_tor_msg)
+void commandTorqueCallback(const turtlebot3_msgs::Torque& cmd_tor_msg)
 {
-  const geometry_msgs::Wrench &left_value = cmd_tor_msg.wrenches[LEFT];
-  const geometry_msgs::Wrench &right_value = cmd_tor_msg.wrenches[RIGHT];
-
+  //const geometry_msgs::Wrench &left_value = cmd_tor_msg.wrenches[LEFT];
+  //const geometry_msgs::Wrench &right_value = cmd_tor_msg.wrenches[RIGHT];
 
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
   //deberia ser multiplicado por la cosntante o bien la operación necesaria
-  goal_current_from_cmd[LEFT] = round(left_value.torque.z * CURRENT_INTEGER_RATIO);
-  goal_current_from_cmd[RIGHT] = round(right_value.torque.z * CURRENT_INTEGER_RATIO);
+
+  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.left_torque * CURRENT_INTEGER_RATIO);
+  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.right_torque * CURRENT_INTEGER_RATIO);
 
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
@@ -263,8 +263,8 @@ void publishCmdTor(void)
 
   if (dxl_comm_result = TRUE)
   {
-    cmd_tor_msg.wrenches[0].torque.z = (float)l_value / INTEGER_CURRENT_RATIO;
-    cmd_tor_msg.wrenches[1].torque.z = (float)r_value / INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.left_torque = (float)l_value / INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.right_torque = (float)r_value / INTEGER_CURRENT_RATIO;
     tor_pub.publish(&cmd_tor_msg);
   }
   else
