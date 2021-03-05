@@ -35,7 +35,7 @@
 #include <turtlebot3_msgs/Sound.h>
 #include <turtlebot3_msgs/VersionInfo.h>
 
-#include <turtlebot3_msgs/Torque.h>
+#include <turtletorque3_msgs/WheelTorque.h>
 
 //Cambiar nombre a estos, para evitar los problemas de viejas librerias
 #include <TurtleTorque3.h>
@@ -143,7 +143,7 @@ char joint_state_header_frame_id[30];
 *******************************************************************************/
 //ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
-ros::Subscriber<turtlebot3_msgs::Torque> cmd_tor_sub("cmd_tor", commandTorqueCallback);
+ros::Subscriber<turtletorque3_msgs::WheelTorque> cmd_tor_sub("cmd_tor", commandTorqueCallback);
 
 ros::Subscriber<turtlebot3_msgs::Sound> sound_sub("sound", soundCallback);
 
@@ -171,7 +171,7 @@ geometry_msgs::Twist cmd_vel_rc100_msg;
 ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
 // Command torque of Turtlebot3
-turtlebot3_msgs::Torque cmd_tor_msg;
+turtletorque3_msgs::WheelTorque cmd_tor_msg;
 ros::Publisher tor_pub("tor", &cmd_tor_msg);
 
 // Odometry of Turtlebot3
