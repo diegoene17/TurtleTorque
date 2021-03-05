@@ -257,19 +257,18 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 void publishCmdTor(void)
 {
   bool dxl_comm_result = false;
-
-  dxl_comm_result = motor_driver.readCurrent(cmd_tor_msg.wrenches[0].torque.z, cmd_tor_msg.wrenches[1].torque.z);
+  int32_t l_value = 0;
+  int32_t r_value = 0;
+  dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
 
   if (dxl_comm_result = TRUE)
   {
-    cmd_tor_msg.wrenches[0].torque.z = cmd_tor_msg.wrenches[0].torque.z / INTEGER_CURRENT_RATIO;
-    cmd_tor_msg.wrenches[1].torque.z = cmd_tor_msg.wrenches[1].torque.z / INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.wrenches[0].torque.z = (float)l_value / INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.wrenches[1].torque.z = (float)r_value / INTEGER_CURRENT_RATIO;
     cmd_tor_pub.publish(&cmd_tor_msg);
   }
   else
-  {
     return;
-  }
 }
 
 
