@@ -41,7 +41,7 @@ void setup()
   nh.advertise(imu_pub);
   nh.advertise(cmd_vel_rc100_pub);
   //Torque
-  nh.advertise(cmd_tor_pub);
+  nh.advertise(tor_pub);
   nh.advertise(odom_pub);
   nh.advertise(joint_states_pub);
   nh.advertise(battery_state_pub);
@@ -265,7 +265,7 @@ void publishCmdTor(void)
   {
     cmd_tor_msg.wrenches[0].torque.z = (float)l_value / INTEGER_CURRENT_RATIO;
     cmd_tor_msg.wrenches[1].torque.z = (float)r_value / INTEGER_CURRENT_RATIO;
-    cmd_tor_pub.publish(&cmd_tor_msg);
+    tor_pub.publish(&cmd_tor_msg);
   }
   else
     return;
