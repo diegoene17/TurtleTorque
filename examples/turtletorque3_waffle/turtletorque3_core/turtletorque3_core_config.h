@@ -172,7 +172,7 @@ ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
 // Command torque of Turtlebot3
 turtlebot3_msgs::WrenchArray cmd_tor_msg;
-ros::Publisher cmd_tor_pub("cmd_tor", &cmd_tor_msg);
+ros::Publisher cmd_tor_pub("tor", &cmd_tor_msg);
 
 // Odometry of Turtlebot3
 nav_msgs::Odometry odom;
