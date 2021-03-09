@@ -29,7 +29,7 @@
 #define ENCODER_MAX                      2147483648      // raw
 
 #define CURRENT_INTEGER_RATIO            (1193 / 2.69)   //Ratio for XM430-W210
-#define INTEGER_CURRENT_RATIO           (1193 * 2.69)   //Ratio for XM430-W210
+#define INTEGER_CURRENT_RATIO           (2.69 / 1193)   //Ratio for XM430-W210
 
 #define MAX_LINEAR_VELOCITY              (WHEEL_RADIUS * 2 * 3.14159265359 * 77 / 60) // m/s  (BURGER : 61[rpm], WAFFLE : 77[rpm])
 #define MAX_ANGULAR_VELOCITY             (MAX_LINEAR_VELOCITY / TURNING_RADIUS)       // rad/s

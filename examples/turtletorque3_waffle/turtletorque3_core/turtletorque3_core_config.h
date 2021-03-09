@@ -80,7 +80,7 @@
 // Callback function prototypes
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg);
 //Callback de torque
-void commandTorqueCallback(const turtlebot3_msgs::Torque& cmd_tor_msg);
+void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg);
 //void commandCurrentCallback(const geometry_msgs::Twist& cmd_tor_msg);
 void soundCallback(const turtlebot3_msgs::Sound& sound_msg);
 void motorPowerCallback(const std_msgs::Bool& power_msg);
