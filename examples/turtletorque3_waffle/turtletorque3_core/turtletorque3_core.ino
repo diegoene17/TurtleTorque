@@ -263,8 +263,8 @@ void publishCmdTor(void)
 
   if (dxl_comm_result = TRUE)
   {
-    cmd_tor_msg.wheel_torque_1 = (float)l_value / INTEGER_CURRENT_RATIO;
-    cmd_tor_msg.wheel_torque_2 = (float)r_value / INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.wheel_torque_1 = (float)l_value * INTEGER_CURRENT_RATIO;
+    cmd_tor_msg.wheel_torque_2 = (float)r_value * INTEGER_CURRENT_RATIO;
     tor_pub.publish(&cmd_tor_msg);
   }
   else
