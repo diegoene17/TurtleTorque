@@ -33,6 +33,9 @@
 #define ADDR_X_PRESENT_CURRENT          126
 #define ADDR_X_PRESENT_POSITION         132
 
+#define CURRENT_LIMIT                   38
+
+
 // Limit values (XM430-W210-T and XM430-W350-T)
 #define WAFFLE_DXL_LIMIT_MAX_CURRENT             1193
 #define BURGER_DXL_LIMIT_MAX_VELOCITY            265     // MAX RPM is 61 when XL is powered 12.0V
@@ -42,6 +45,7 @@
 #define LEN_X_TORQUE_ENABLE             1
 #define LEN_X_GOAL_POSITION             4
 #define LEN_X_GOAL_CURRENT              2
+#define LEN_X_CURRENT_LIMIT             2
 #define LEN_X_REALTIME_TICK             2
 #define LEN_X_PRESENT_CURRENT           2
 #define LEN_X_PRESENT_POSITION          4
@@ -97,6 +101,7 @@ class TurtleTorque3MotorDriver
   dynamixel::PacketHandler *packetHandler_;
 
   dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
+  dynamixel::GroupSyncWrite *groupSyncCurrentLimit_;
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
   dynamixel::GroupSyncRead *groupSyncReadCurrent_;
 };

@@ -57,6 +57,7 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   setTorque(true);
 
   groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
+  groupSyncCurrentLimit_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, CURRENT_LIMIT, LEN_X_CURRENT_LIMIT);
   groupSyncReadEncoder_   = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
   groupSyncReadCurrent_ = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
 
@@ -211,6 +212,8 @@ bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_va
   left_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(left_value));
 
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
+  //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
+
   if (dxl_addparam_result != true)
     return false;
 
@@ -220,10 +223,13 @@ bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_va
   right_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(right_value));
 
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
+  //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
   if (dxl_addparam_result != true)
     return false;
 
   dxl_comm_result = groupSyncWriteCurrent_->txPacket();
+  //dxl_comm_result = groupSyncCurrentLimit_->txPacket();
+
   if (dxl_comm_result != COMM_SUCCESS)
   {
     Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
@@ -231,6 +237,7 @@ bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_va
   }
 
   groupSyncWriteCurrent_->clearParam();
+  //groupSyncCurrentLimit_->clearParam();
   return true;
 }
 
