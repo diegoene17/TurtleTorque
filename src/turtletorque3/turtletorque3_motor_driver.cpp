@@ -208,6 +208,9 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
 
   left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(left_value));
   left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(left_value));
+  char log_msg[50];
+  sprintf(log_msg, "valor left: %i %i",left_data_byte[1],left_data_byte[0]);
+  nh.loginfo(log_msg);
 
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
@@ -222,6 +225,9 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
 
   right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(right_value));
   right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(right_value));
+  char log_msg[50];
+  sprintf(log_msg, "valor right: %i %i",right_data_byte[1],right_data_byte[0]);
+  nh.loginfo(log_msg);
 
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
