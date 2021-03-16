@@ -212,16 +212,26 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
 
-  if (dxl_addparam_result != true)
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    char log_msg[50];
+    sprintf(log_msg, "Fallo parametro left");
+    nh.loginfo(log_msg);
     return false;
+  }
 
   right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(right_value));
   right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(right_value));
 
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
-  if (dxl_addparam_result != true)
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    char log_msg[50];
+    sprintf(log_msg, "Fallo parametro left");
+    nh.loginfo(log_msg);
     return false;
+  }
 
   dxl_comm_result = groupSyncWriteCurrent_->txPacket();
   //dxl_comm_result = groupSyncCurrentLimit_->txPacket();
