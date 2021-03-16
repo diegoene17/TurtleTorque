@@ -197,7 +197,7 @@ bool TurtleTorque3MotorDriver::readCurrent(int32_t &left_value, int32_t &right_v
   return true;
 }
 
-bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_value)
+bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
@@ -237,7 +237,7 @@ bool TurtleTorque3MotorDriver::writeCurrent(int64_t left_value, int64_t right_va
   return true;
 }
 
-bool TurtleTorque3MotorDriver::controlMotor(int64_t left_value, int64_t right_value)
+bool TurtleTorque3MotorDriver::controlMotor(int32_t left_value, int32_t right_value)
 {
   bool dxl_comm_result = false;
   //Aqui iria el controlador en caso de ser necesario
