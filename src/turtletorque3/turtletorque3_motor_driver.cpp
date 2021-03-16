@@ -215,8 +215,8 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
   if (dxl_addparam_result != true)
     return false;
 
-  right_data_byte[0] = DXL_LOBYTE(right_value);
-  right_data_byte[1] = DXL_HIBYTE(right_value);
+  right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(right_value));
+  right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(right_value));
 
   dxl_addparam_result = groupSyncWriteCurrent_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);

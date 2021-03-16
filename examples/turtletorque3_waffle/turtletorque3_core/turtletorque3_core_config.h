@@ -240,7 +240,7 @@ float goal_current[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_button[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_cmd[WHEEL_NUM] = {0.0, 0.0};
 //Esto debe cambiar a float cuando tengamos la corriente-torque
-int64_t goal_current_from_cmd[WHEEL_NUM] = {0, 0};
+int32_t goal_current_from_cmd[WHEEL_NUM] = {0, 0};
 float goal_velocity_from_rc100[WHEEL_NUM] = {0.0, 0.0};
 
 /*******************************************************************************
