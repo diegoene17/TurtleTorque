@@ -193,9 +193,9 @@ void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
   /*goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 * CURRENT_INTEGER_RATIO);
   goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 * CURRENT_INTEGER_RATIO);
   */
-  char log_msg[50];
-  goal_current_from_cmd[LEFT] = (int)round(cmd_tor_msg.wheel_torque_1);
-  goal_current_from_cmd[RIGHT] = (int)round(cmd_tor_msg.wheel_torque_2);
+  char log_msg[200];
+  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1);
+  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2);
   sprintf(log_msg, "Valor left:", goal_current_from_cmd[LEFT] , ", Valor right", goal_current_from_cmd[RIGHT]);
   nh.loginfo(log_msg);
   //Mantiene la variable dentro de los limites
