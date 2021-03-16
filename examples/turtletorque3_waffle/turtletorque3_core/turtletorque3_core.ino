@@ -200,9 +200,9 @@ void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
-  
-  sprintf(log_msg, "Valor left: %i Valor right: %i ", goal_current_from_cmd[LEFT] , goal_current_from_cmd[RIGHT]);
-  nh.loginfo(log_msg);
+
+  /*sprintf(log_msg, "Valor left: %i Valor right: %i ", goal_current_from_cmd[LEFT] , goal_current_from_cmd[RIGHT]);
+  nh.loginfo(log_msg);*/
   tTime[6] = millis();
 }
 /*******************************************************************************
