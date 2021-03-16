@@ -16,8 +16,8 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#ifndef TURTLEBOT3_DIAGNOSIS_H_
-#define TURTLEBOT3_DIAGNOSIS_H_
+#ifndef TURTLETORQUE3_DIAGNOSIS_H_
+#define TURTLETORQUE3_DIAGNOSIS_H_
 
 #include <Arduino.h>
 
@@ -39,11 +39,11 @@
 
 #define DEBUG_SERIAL  SerialBT2
 
-class Turtlebot3Diagnosis
+class TurtleTorque3Diagnosis
 {
  public:
-  Turtlebot3Diagnosis();
-  ~Turtlebot3Diagnosis();
+  TurtleTorque3Diagnosis();
+  ~TurtleTorque3Diagnosis();
 
   bool init();
 
@@ -55,7 +55,7 @@ class Turtlebot3Diagnosis
 
   uint8_t updateVoltageCheck(bool check_setup);
 
-  uint8_t getButtonPress(uint16_t time_to_press);  
+  uint8_t getButtonPress(uint16_t time_to_press);
 
  private:
 

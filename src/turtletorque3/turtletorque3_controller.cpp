@@ -16,23 +16,23 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#include "../../include/turtlebot3/turtlebot3_controller.h"
+#include "../../include/turtletorque3/turtletorque3_controller.h"
 
-Turtlebot3Controller::Turtlebot3Controller()
+TurtleTorque3Controller::TurtleTorque3Controller()
 {
   const_cmd_vel_ = CONST_VEL;
 }
 
-Turtlebot3Controller::~Turtlebot3Controller()
+TurtleTorque3Controller::~TurtleTorque3Controller()
 {
   DEBUG_SERIAL.end();
 }
 
-bool Turtlebot3Controller::init(float max_lin_vel, float max_ang_vel, uint8_t scale_lin_vel, uint8_t scale_ang_vel)
+bool TurtleTorque3Controller::init(float max_lin_vel, float max_ang_vel, uint8_t scale_lin_vel, uint8_t scale_ang_vel)
 {
   DEBUG_SERIAL.begin(57600);
   // 57600bps baudrate for RC100 control
-  rc100_.begin(1);  
+  rc100_.begin(1);
 
   max_lin_vel_ = max_lin_vel;
   min_lin_vel_ = (-1)*max_lin_vel;
@@ -45,13 +45,13 @@ bool Turtlebot3Controller::init(float max_lin_vel, float max_ang_vel, uint8_t sc
   return true;
 }
 
-bool Turtlebot3Controller::getRCdata(float *get_cmd_vel)
+bool TurtleTorque3Controller::getRCdata(float *get_cmd_vel)
 {
   uint16_t received_data = 0;
   bool clicked_state = false;
 
   static float lin_x = 0.0, ang_z = 0.0;
-  
+
   if (rc100_.available())
   {
     received_data = rc100_.readData();

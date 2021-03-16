@@ -16,8 +16,8 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
 
-#ifndef TURTLEBOT3_CONTROLLER_H_
-#define TURTLEBOT3_CONTROLLER_H_
+#ifndef TURTLETORQUE3_CONTROLLER_H_
+#define TURTLETORQUE3_CONTROLLER_H_
 
 #include <RC100.h>
 
@@ -30,11 +30,11 @@
 
 #define DEBUG_SERIAL SerialBT2
 
-class Turtlebot3Controller
+class TurtleTorque3Controller
 {
  public:
-  Turtlebot3Controller();
-  ~Turtlebot3Controller();
+  TurtleTorque3Controller();
+  ~TurtleTorque3Controller();
 
   bool init(float max_lin_vel, float max_ang_vel, uint8_t scale_lin_vel = 1, uint8_t scale_ang_vel = 1);
 

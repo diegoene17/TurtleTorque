@@ -16,18 +16,18 @@
 
 /* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
 
-#include "../../include/turtlebot3/turtlebot3_sensor.h"
+#include "../../include/turtletorque3/turtletorque3_sensor.h"
 
-Turtlebot3Sensor::Turtlebot3Sensor()
+TurtleTorque3Sensor::TurtleTorque3Sensor()
 {
 }
 
-Turtlebot3Sensor::~Turtlebot3Sensor()
+TurtleTorque3Sensor::~TurtleTorque3Sensor()
 {
   DEBUG_SERIAL.end();
 }
 
-bool Turtlebot3Sensor::init(void)
+bool TurtleTorque3Sensor::init(void)
 {
   DEBUG_SERIAL.begin(57600);
 
@@ -58,17 +58,17 @@ bool Turtlebot3Sensor::init(void)
   return get_error_code;
 }
 
-void Turtlebot3Sensor::initIMU(void)
+void TurtleTorque3Sensor::initIMU(void)
 {
   imu_.begin();
 }
 
-void Turtlebot3Sensor::updateIMU(void)
+void TurtleTorque3Sensor::updateIMU(void)
 {
   imu_.update();
 }
 
-void Turtlebot3Sensor::calibrationGyro()
+void TurtleTorque3Sensor::calibrationGyro()
 {
   uint32_t pre_time;
   uint32_t t_time;
@@ -76,7 +76,7 @@ void Turtlebot3Sensor::calibrationGyro()
   const uint8_t led_ros_connect = 3;
 
   imu_.SEN.gyro_cali_start();
-  
+
   t_time   = millis();
   pre_time = millis();
 
@@ -96,7 +96,7 @@ void Turtlebot3Sensor::calibrationGyro()
   }
 }
 
-sensor_msgs::Imu Turtlebot3Sensor::getIMU(void)
+sensor_msgs::Imu TurtleTorque3Sensor::getIMU(void)
 {
   imu_msg_.angular_velocity.x = imu_.SEN.gyroADC[0] * GYRO_FACTOR;
   imu_msg_.angular_velocity.y = imu_.SEN.gyroADC[1] * GYRO_FACTOR;
@@ -143,7 +143,7 @@ sensor_msgs::Imu Turtlebot3Sensor::getIMU(void)
   return imu_msg_;
 }
 
-float* Turtlebot3Sensor::getOrientation(void)
+float* TurtleTorque3Sensor::getOrientation(void)
 {
   static float orientation[4];
 
@@ -155,7 +155,7 @@ float* Turtlebot3Sensor::getOrientation(void)
   return orientation;
 }
 
-sensor_msgs::MagneticField Turtlebot3Sensor::getMag(void)
+sensor_msgs::MagneticField TurtleTorque3Sensor::getMag(void)
 {
   mag_msg_.magnetic_field.x = imu_.SEN.magADC[0] * MAG_FACTOR;
   mag_msg_.magnetic_field.y = imu_.SEN.magADC[1] * MAG_FACTOR;
@@ -174,23 +174,23 @@ sensor_msgs::MagneticField Turtlebot3Sensor::getMag(void)
   return mag_msg_;
 }
 
-float Turtlebot3Sensor::checkVoltage(void)
+float TurtleTorque3Sensor::checkVoltage(void)
 {
   float vol_value;
-  
+
   vol_value = getPowerInVoltage();
 
   return vol_value;
 }
 
-uint8_t Turtlebot3Sensor::checkPushButton(void)
+uint8_t TurtleTorque3Sensor::checkPushButton(void)
 {
   return getPushButton();
 }
 
-void Turtlebot3Sensor::melody(uint16_t* note, uint8_t note_num, uint8_t* durations)
+void TurtleTorque3Sensor::melody(uint16_t* note, uint8_t note_num, uint8_t* durations)
 {
-  for (int thisNote = 0; thisNote < note_num; thisNote++) 
+  for (int thisNote = 0; thisNote < note_num; thisNote++)
   {
     // to calculate the note duration, take one second
     // divided by the note type.
@@ -207,7 +207,7 @@ void Turtlebot3Sensor::melody(uint16_t* note, uint8_t note_num, uint8_t* duratio
   }
 }
 
-void Turtlebot3Sensor::makeSound(uint8_t index)
+void TurtleTorque3Sensor::makeSound(uint8_t index)
 {
   const uint16_t NOTE_C4 = 262;
   const uint16_t NOTE_D4 = 294;
@@ -239,7 +239,7 @@ void Turtlebot3Sensor::makeSound(uint8_t index)
       note[4] = NOTE_G4;   duration[4] = 4;
       note[5] = NOTE_A4;   duration[5] = 4;
       note[6] = NOTE_B4;   duration[6] = 4;
-      note[7] = NOTE_C5;   duration[7] = 4;   
+      note[7] = NOTE_C5;   duration[7] = 4;
      break;
 
     case OFF:
@@ -250,7 +250,7 @@ void Turtlebot3Sensor::makeSound(uint8_t index)
       note[4] = NOTE_F4;   duration[4] = 4;
       note[5] = NOTE_E4;   duration[5] = 4;
       note[6] = NOTE_D4;   duration[6] = 4;
-      note[7] = NOTE_C4;   duration[7] = 4;  
+      note[7] = NOTE_C4;   duration[7] = 4;
      break;
 
     case LOW_BATTERY:
@@ -289,43 +289,43 @@ void Turtlebot3Sensor::makeSound(uint8_t index)
       note[4] = NOTE_G4;   duration[4] = 4;
       note[5] = NOTE_A4;   duration[5] = 4;
       note[6] = NOTE_B4;   duration[6] = 4;
-      note[7] = NOTE_C4;   duration[7] = 4; 
+      note[7] = NOTE_C4;   duration[7] = 4;
      break;
   }
 
   melody(note, 8, duration);
 }
 
-void Turtlebot3Sensor::initBumper(void)
+void TurtleTorque3Sensor::initBumper(void)
 {
   ollo_.begin(3, TOUCH_SENSOR);
   ollo_.begin(4, TOUCH_SENSOR);
 }
 
-uint8_t Turtlebot3Sensor::checkPushBumper(void)
+uint8_t TurtleTorque3Sensor::checkPushBumper(void)
 {
   uint8_t push_state = 0;
 
   if      (ollo_.read(3, TOUCH_SENSOR) == HIGH) push_state = 2;
   else if (ollo_.read(4, TOUCH_SENSOR) == HIGH) push_state = 1;
   else    push_state = 0;
-  
+
   return push_state;
 }
 
-void Turtlebot3Sensor::initIR(void)
+void TurtleTorque3Sensor::initIR(void)
 {
   ollo_.begin(2, IR_SENSOR);
 }
 
-float Turtlebot3Sensor::getIRsensorData(void)
+float TurtleTorque3Sensor::getIRsensorData(void)
 {
   float ir_data = ollo_.read(2, IR_SENSOR);
-  
+
   return ir_data;
 }
 
-void Turtlebot3Sensor::initSonar(void)
+void TurtleTorque3Sensor::initSonar(void)
 {
   sonar_pin_.trig = BDPIN_GPIO_1;
   sonar_pin_.echo = BDPIN_GPIO_2;
@@ -334,7 +334,7 @@ void Turtlebot3Sensor::initSonar(void)
   pinMode(sonar_pin_.echo, INPUT);
 }
 
-void Turtlebot3Sensor::updateSonar(uint32_t t)
+void TurtleTorque3Sensor::updateSonar(uint32_t t)
 {
   static uint32_t t_time = 0;
   static bool make_pulse = TRUE;
@@ -369,7 +369,7 @@ void Turtlebot3Sensor::updateSonar(uint32_t t)
   sonar_data_ = distance;
 }
 
-float Turtlebot3Sensor::getSonarData(void)
+float TurtleTorque3Sensor::getSonarData(void)
 {
   float distance = 0.0;
 
@@ -378,7 +378,7 @@ float Turtlebot3Sensor::getSonarData(void)
   return distance;
 }
 
-float Turtlebot3Sensor::getIlluminationData(void)
+float TurtleTorque3Sensor::getIlluminationData(void)
 {
   uint16_t light;
 
@@ -387,20 +387,20 @@ float Turtlebot3Sensor::getIlluminationData(void)
   return light;
 }
 
-void Turtlebot3Sensor::initLED(void)
+void TurtleTorque3Sensor::initLED(void)
 {
   led_pin_array_.front_left  = BDPIN_GPIO_4;
   led_pin_array_.front_right = BDPIN_GPIO_6;
   led_pin_array_.back_left   = BDPIN_GPIO_8;
   led_pin_array_.back_right  = BDPIN_GPIO_10;
- 
+
   pinMode(led_pin_array_.front_left, OUTPUT);
   pinMode(led_pin_array_.front_right, OUTPUT);
   pinMode(led_pin_array_.back_left, OUTPUT);
   pinMode(led_pin_array_.back_right, OUTPUT);
 }
 
-void Turtlebot3Sensor::setLedPattern(double linear_vel, double angular_vel)
+void TurtleTorque3Sensor::setLedPattern(double linear_vel, double angular_vel)
 {
   if (linear_vel > 0.0 && angular_vel == 0.0)     // front
   {
@@ -444,7 +444,7 @@ void Turtlebot3Sensor::setLedPattern(double linear_vel, double angular_vel)
     digitalWrite(led_pin_array_.back_left, HIGH);
     digitalWrite(led_pin_array_.back_right, LOW);
   }
-  else 
+  else
   {
     digitalWrite(led_pin_array_.front_left, LOW);
     digitalWrite(led_pin_array_.front_right, LOW);
@@ -452,8 +452,3 @@ void Turtlebot3Sensor::setLedPattern(double linear_vel, double angular_vel)
     digitalWrite(led_pin_array_.back_right, LOW);
   }
 }
-
-
-
-
-
