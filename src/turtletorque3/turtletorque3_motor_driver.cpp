@@ -202,8 +202,8 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
 
-  uint8_t left_data_byte[2] = {0, };
-  uint8_t right_data_byte[2] = {0, };
+  uint8_t left_data_byte[2] = {,};
+  uint8_t right_data_byte[2] = {,};
 
 
   left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(left_value));
