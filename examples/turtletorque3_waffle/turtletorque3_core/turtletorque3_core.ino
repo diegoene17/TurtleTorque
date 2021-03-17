@@ -264,8 +264,8 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 void publishCmdTor(void)
 {
   bool dxl_comm_result = false;
-  int16_t l_value = 0;
-  int16_t r_value = 0;
+  uint16_t l_value = 0;
+  uint16_t r_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
   char log_msg[50];
 

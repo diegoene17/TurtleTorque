@@ -160,11 +160,11 @@ bool TurtleTorque3MotorDriver::readEncoder(int32_t &left_value, int32_t &right_v
   return true;
 }
 
-bool TurtleTorque3MotorDriver::readCurrent(int16_t &left_value, int16_t &right_value)
+bool TurtleTorque3MotorDriver::readCurrent(uint16_t &left_value, uint16_t &right_value)
 {
   int dxl_comm_result = COMM_TX_FAIL;              // Communication result
   uint8_t dxl_error = 0;                           //Communication error
-  
+
   // Read dynamixel1 present current
   dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,left_wheel_id_,ADDR_X_PRESENT_CURRENT,&left_value,&dxl_error);
   if(dxl_comm_result != COMM_SUCCESS)
