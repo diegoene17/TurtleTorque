@@ -163,37 +163,32 @@ bool TurtleTorque3MotorDriver::readEncoder(int32_t &left_value, int32_t &right_v
 bool TurtleTorque3MotorDriver::readCurrent(int16_t &left_value, int16_t &right_value)
 {
   int dxl_comm_result = COMM_TX_FAIL;              // Communication result
-  bool dxl_addparam_result = false;                // addParam result
-  bool dxl_getdata_result = false;                 // GetParam result
-
-  // Set parameter
-  dxl_addparam_result = groupSyncReadCurrent_->addParam(left_wheel_id_);
-  if (dxl_addparam_result != true)
-    return false;
-
-  dxl_addparam_result = groupSyncReadCurrent_->addParam(right_wheel_id_);
-  if (dxl_addparam_result != true)
-    return false;
-
-  // Syncread present position
-  dxl_comm_result = groupSyncReadCurrent_->txRxPacket();
-  if (dxl_comm_result != COMM_SUCCESS)
+  uint8_t dxl_error = 0;                           //Communication error
+  
+  // Read dynamixel1 present current
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,left_wheel_id_,ADDR_X_PRESENT_CURRENT,&left_value,&dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
     Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
-
-  // Check if groupSyncRead data of Dynamixels are available
-  dxl_getdata_result = groupSyncReadCurrent_->isAvailable(left_wheel_id_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  if (dxl_getdata_result != true)
     return false;
-
-  dxl_getdata_result = groupSyncReadCurrent_->isAvailable(right_wheel_id_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  if (dxl_getdata_result != true)
+  }
+  else if (dxl_error != 0)
+  {
+    Serial.println(packetHandler_->getRxPacketError(dxl_error));
     return false;
-
-  // Get data
-  left_value  = groupSyncReadCurrent_->getData(left_wheel_id_,  ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  right_value = groupSyncReadCurrent_->getData(right_wheel_id_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-
-  groupSyncReadCurrent_->clearParam();
+  }
+  // Read dynamixel2 present current
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,right_wheel_id_,ADDR_X_PRESENT_CURRENT,&right_value,&dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
+    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+  else if (dxl_error != 0)
+  {
+    Serial.println(packetHandler_->getRxPacketError(dxl_error));
+    return false;
+  }
   return true;
 }
 
