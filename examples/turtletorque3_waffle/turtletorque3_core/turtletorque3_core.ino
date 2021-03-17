@@ -269,7 +269,7 @@ void publishCmdTor(void)
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
   char log_msg[50];
 
-  sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i",l_value,r_value);
+  sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i", l_value,r_value);
   nh.loginfo(log_msg);
   if (dxl_comm_result = TRUE)
   {
@@ -908,7 +908,7 @@ void sendDebuglog(void)
   DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
   DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
 
-  int16_t current[WHEEL_NUM] = {0, 0};
+  uint16_t current[WHEEL_NUM] = {0, 0};
   motor_driver.readCurrent(current[LEFT], current[RIGHT]);
 
   DEBUG_SERIAL.println("Current(left) : " + String(current[LEFT]));
