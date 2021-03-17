@@ -82,7 +82,7 @@ class TurtleTorque3MotorDriver
   bool setTorque(bool onoff);
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
-  bool readCurrent(int32_t &left_value, int32_t &right_value);
+  bool readCurrent(int16_t &left_value, int16_t &right_value);
   bool writeVelocity(int64_t left_value, int64_t right_value);
   bool writeCurrent(int32_t left_value, int32_t right_value);                   //No sabemos si es int64 o int32
   bool controlMotor(int32_t left_value, int32_t right_value);

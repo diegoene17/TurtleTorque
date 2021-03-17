@@ -264,8 +264,8 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 void publishCmdTor(void)
 {
   bool dxl_comm_result = false;
-  int32_t l_value = 0;
-  int32_t r_value = 0;
+  int16_t l_value = 0;
+  int16_t r_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
   char log_msg[50];
 
@@ -908,7 +908,7 @@ void sendDebuglog(void)
   DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
   DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
 
-  int32_t current[WHEEL_NUM] = {0, 0};
+  int16_t current[WHEEL_NUM] = {0, 0};
   motor_driver.readCurrent(current[LEFT], current[RIGHT]);
 
   DEBUG_SERIAL.println("Current(left) : " + String(current[LEFT]));
