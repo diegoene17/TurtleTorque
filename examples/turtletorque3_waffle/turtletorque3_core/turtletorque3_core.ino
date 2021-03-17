@@ -268,7 +268,8 @@ void publishCmdTor(void)
   int32_t r_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
   char log_msg[50];
-  nh.sprintf("Valor izquierdo: %i Valor derecho %i", l_value,r_value);
+
+  sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i",l_value,r_value);
   nh.loginfo(log_msg);
   if (dxl_comm_result = TRUE)
   {
