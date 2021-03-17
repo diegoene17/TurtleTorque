@@ -267,7 +267,9 @@ void publishCmdTor(void)
   int32_t l_value = 0;
   int32_t r_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
-
+  char log_msg[50];
+  nh.sprintf("Valor izquierdo: %i Valor derecho %i", l_value,r_value);
+  nh.loginfo(log_msg);
   if (dxl_comm_result = TRUE)
   {
     /*cmd_tor_msg.wheel_torque_1 = (float)l_value * INTEGER_CURRENT_RATIO;
