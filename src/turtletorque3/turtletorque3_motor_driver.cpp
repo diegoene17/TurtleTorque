@@ -201,8 +201,8 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
   uint8_t right_data_byte[2];
 
 
-  left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(left_value));
-  left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(left_value));
+  left_data_byte[1] = DXL_LOBYTE(DXL_LOWORD(left_value));
+  left_data_byte[0] = DXL_HIBYTE(DXL_LOWORD(left_value));
 
   DEBUG_SERIAL.println("Valor izquiero: ");
   DEBUG_SERIAL.println(left_data_byte[1]);
@@ -217,8 +217,8 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
     return false;
   }
 
-  right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(right_value));
-  right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(right_value));
+  right_data_byte[1] = DXL_LOBYTE(DXL_LOWORD(right_value));
+  right_data_byte[0] = DXL_HIBYTE(DXL_LOWORD(right_value));
   DEBUG_SERIAL.println("Valor derecho: ");
   DEBUG_SERIAL.println(right_data_byte[1]);
   DEBUG_SERIAL.println(right_data_byte[0]);
