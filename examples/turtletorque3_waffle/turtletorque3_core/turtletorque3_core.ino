@@ -194,9 +194,11 @@ void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
   goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 * CURRENT_INTEGER_RATIO);
   */
   //char log_msg[200];
+  //Aqui va a ir el polinomio (Podria ser tambien en matlab)
 
-  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1);
-  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2);
+  //Se recibe el valor en Ampers y se transforma a enteros segun la unidad dada en el manual 2.69mA
+  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 / .00269);
+  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 / .00269);
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
