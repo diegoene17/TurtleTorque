@@ -269,17 +269,17 @@ void publishCmdTor(void)
   uint16_t l_value = 0;
   uint16_t r_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
-  char log_msg[50];
 
-  sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i", l_value,r_value);
-  nh.loginfo(log_msg);
+  //char log_msg[50];
+  //sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i", l_value,r_value);
+  //nh.loginfo(log_msg);
   if (dxl_comm_result = TRUE)
   {
     /*cmd_tor_msg.wheel_torque_1 = (float)l_value * INTEGER_CURRENT_RATIO;
     cmd_tor_msg.wheel_torque_2 = (float)r_value * INTEGER_CURRENT_RATIO
     */
     //Cambio de entero a corriente (A)
-    //Aqui iria el otro polinomio 
+    //Aqui iria el otro polinomio
     cmd_tor_msg.wheel_torque_1 = (float)l_value * .00269;
     cmd_tor_msg.wheel_torque_2 = (float)r_value * .00269;
     tor_pub.publish(&cmd_tor_msg);
