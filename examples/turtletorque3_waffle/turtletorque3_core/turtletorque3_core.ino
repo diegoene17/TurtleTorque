@@ -278,7 +278,8 @@ void publishCmdTor(void)
     /*cmd_tor_msg.wheel_torque_1 = (float)l_value * INTEGER_CURRENT_RATIO;
     cmd_tor_msg.wheel_torque_2 = (float)r_value * INTEGER_CURRENT_RATIO
     */
-    //Cambio de entero a corriente (A) 
+    //Cambio de entero a corriente (A)
+    //Aqui iria el otro polinomio 
     cmd_tor_msg.wheel_torque_1 = (float)l_value * .00269;
     cmd_tor_msg.wheel_torque_2 = (float)r_value * .00269;
     tor_pub.publish(&cmd_tor_msg);
