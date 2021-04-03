@@ -30,8 +30,8 @@ void setup()
   nh.getHardware()->setBaud(115200);
 
 // modificar eso al crear los subscriber
+  nh.subscribe(cmd_vel_sub);
   nh.subscribe(cmd_tor_sub);
-//  nh.subscribe(cmd_vel_sub);
   nh.subscribe(sound_sub);
   nh.subscribe(motor_power_sub);
   nh.subscribe(reset_sub);
@@ -101,7 +101,7 @@ void loop()
     //Podriamos matar el control con el mando y meter aqui el publishCmdTor
     //SIMON
     publishCmdTor();
-    //publishCmdVelFromRC100Msg();
+    publishCmdVelFromRC100Msg();
     tTime[1] = t;
   }
 
@@ -171,7 +171,7 @@ void loop()
 /*******************************************************************************
 * Callback function for cmd_vel msg al final sera cmd_tor msg
 *******************************************************************************/
-/*
+
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 {
   goal_velocity_from_cmd[LINEAR]  = cmd_vel_msg.linear.x;
@@ -181,12 +181,8 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   tTime[6] = millis();
 }
-*/
 void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
 {
-  //const geometry_msgs::Wrench &left_value = cmd_tor_msg.wrenches[LEFT];
-  //const geometry_msgs::Wrench &right_value = cmd_tor_msg.wrenches[RIGHT];
-
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
   //deberia ser multiplicado por la cosntante o bien la operación necesaria
 
@@ -200,12 +196,6 @@ void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
   goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 / .00269);
   goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 / .00269);
   //Mantiene la variable dentro de los limites
-  if goal_current_from_cmd[LEFT] <= 0.02{
-    goal_current_from_cmd[LEFT] = 0;
-  }
-  if goal_current_from_cmd[RIGHT] <= 0.02{
-    goal_current_from_cmd[RIGHT] = 0;
-  }
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
 
@@ -257,13 +247,13 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 /*******************************************************************************
 * Publish msgs (CMD Velocity data from RC100 : angular velocity, linear velocity)
 *******************************************************************************/
-/*void publishCmdVelFromRC100Msg(void)
+void publishCmdVelFromRC100Msg(void)
 {
   cmd_vel_rc100_msg.linear.x  = goal_velocity_from_rc100[LINEAR];
   cmd_vel_rc100_msg.angular.z = goal_velocity_from_rc100[ANGULAR];
 
   cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
-}*/
+}
 
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
