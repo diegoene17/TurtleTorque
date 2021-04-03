@@ -160,44 +160,39 @@ bool TurtleTorque3MotorDriver::readEncoder(int32_t &left_value, int32_t &right_v
   return true;
 }
 
-bool TurtleTorque3MotorDriver::readCurrent(int32_t &left_value, int32_t &right_value)
+bool TurtleTorque3MotorDriver::readCurrent(uint16_t &left_value, uint16_t &right_value)
 {
   int dxl_comm_result = COMM_TX_FAIL;              // Communication result
-  bool dxl_addparam_result = false;                // addParam result
-  bool dxl_getdata_result = false;                 // GetParam result
+  uint8_t dxl_error = 0;                           //Communication error
 
-  // Set parameter
-  dxl_addparam_result = groupSyncReadCurrent_->addParam(left_wheel_id_);
-  if (dxl_addparam_result != true)
-    return false;
-
-  dxl_addparam_result = groupSyncReadCurrent_->addParam(right_wheel_id_);
-  if (dxl_addparam_result != true)
-    return false;
-
-  // Syncread present position
-  dxl_comm_result = groupSyncReadCurrent_->txRxPacket();
-  if (dxl_comm_result != COMM_SUCCESS)
+  // Read dynamixel1 present current
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,left_wheel_id_,ADDR_X_PRESENT_CURRENT,&left_value,&dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
     Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
-
-  // Check if groupSyncRead data of Dynamixels are available
-  dxl_getdata_result = groupSyncReadCurrent_->isAvailable(left_wheel_id_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  if (dxl_getdata_result != true)
     return false;
-
-  dxl_getdata_result = groupSyncReadCurrent_->isAvailable(right_wheel_id_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  if (dxl_getdata_result != true)
+  }
+  else if (dxl_error != 0)
+  {
+    Serial.println(packetHandler_->getRxPacketError(dxl_error));
     return false;
-
-  // Get data
-  left_value  = groupSyncReadCurrent_->getData(left_wheel_id_,  ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  right_value = groupSyncReadCurrent_->getData(right_wheel_id_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-
-  groupSyncReadCurrent_->clearParam();
+  }
+  // Read dynamixel2 present current
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,right_wheel_id_,ADDR_X_PRESENT_CURRENT,&right_value,&dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
+    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+  else if (dxl_error != 0)
+  {
+    Serial.println(packetHandler_->getRxPacketError(dxl_error));
+    return false;
+  }
   return true;
 }
 
-bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_value)
+bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
@@ -206,22 +201,28 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
   uint8_t right_data_byte[2];
 
 
-  left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(left_value));
-  left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(left_value));
+  left_data_byte[0] = DXL_LOBYTE(left_value);
+  left_data_byte[1] = DXL_HIBYTE(left_value);
 
-  dxl_addparam_result = groupSyncWriteCurrent_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
+  dxl_addparam_result = groupSyncWriteCurrent_->addParam(left_wheel_id_, left_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
 
-  if (dxl_addparam_result != true)
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    DEBUG_SERIAL.println("Fallo motor izquierdo");
     return false;
+  }
 
   right_data_byte[0] = DXL_LOBYTE(right_value);
   right_data_byte[1] = DXL_HIBYTE(right_value);
 
-  dxl_addparam_result = groupSyncWriteCurrent_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
+  dxl_addparam_result = groupSyncWriteCurrent_->addParam(right_wheel_id_, right_data_byte);
   //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
-  if (dxl_addparam_result != true)
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    DEBUG_SERIAL.println("Fallo motor derecho");
     return false;
+  }
 
   dxl_comm_result = groupSyncWriteCurrent_->txPacket();
   //dxl_comm_result = groupSyncCurrentLimit_->txPacket();
@@ -237,7 +238,46 @@ bool TurtleTorque3MotorDriver::writeCurrent(int32_t left_value, int32_t right_va
   return true;
 }
 
-bool TurtleTorque3MotorDriver::controlMotor(int32_t left_value, int32_t right_value)
+bool Turtlebot3MotorDriver::writeVelocity(int64_t left_value, int64_t right_value)
+{
+  bool dxl_addparam_result;
+  int8_t dxl_comm_result;
+
+  uint8_t left_data_byte[4] = {0, };
+  uint8_t right_data_byte[4] = {0, };
+
+
+  left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(left_value));
+  left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(left_value));
+  left_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(left_value));
+  left_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(left_value));
+
+  dxl_addparam_result = groupSyncWriteVelocity_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
+  if (dxl_addparam_result != true)
+    return false;
+
+  right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(right_value));
+  right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(right_value));
+  right_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(right_value));
+  right_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(right_value));
+
+  dxl_addparam_result = groupSyncWriteVelocity_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
+  if (dxl_addparam_result != true)
+    return false;
+
+  dxl_comm_result = groupSyncWriteVelocity_->txPacket();
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+
+  groupSyncWriteVelocity_->clearParam();
+  return true;
+}
+
+
+bool TurtleTorque3MotorDriver::controlMotor(int left_value, int right_value)
 {
   bool dxl_comm_result = false;
   //Aqui iria el controlador en caso de ser necesario

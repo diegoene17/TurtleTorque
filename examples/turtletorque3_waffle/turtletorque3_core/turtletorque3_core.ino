@@ -30,8 +30,8 @@ void setup()
   nh.getHardware()->setBaud(115200);
 
 // modificar eso al crear los subscriber
+  nh.subscribe(cmd_vel_sub);
   nh.subscribe(cmd_tor_sub);
-//  nh.subscribe(cmd_vel_sub);
   nh.subscribe(sound_sub);
   nh.subscribe(motor_power_sub);
   nh.subscribe(reset_sub);
@@ -101,7 +101,7 @@ void loop()
     //Podriamos matar el control con el mando y meter aqui el publishCmdTor
     //SIMON
     publishCmdTor();
-    //publishCmdVelFromRC100Msg();
+    publishCmdVelFromRC100Msg();
     tTime[1] = t;
   }
 
@@ -171,7 +171,7 @@ void loop()
 /*******************************************************************************
 * Callback function for cmd_vel msg al final sera cmd_tor msg
 *******************************************************************************/
-/*
+
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 {
   goal_velocity_from_cmd[LINEAR]  = cmd_vel_msg.linear.x;
@@ -181,27 +181,26 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   tTime[6] = millis();
 }
-*/
 void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
 {
-  //const geometry_msgs::Wrench &left_value = cmd_tor_msg.wrenches[LEFT];
-  //const geometry_msgs::Wrench &right_value = cmd_tor_msg.wrenches[RIGHT];
-
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
   //deberia ser multiplicado por la cosntante o bien la operación necesaria
 
   /*goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 * CURRENT_INTEGER_RATIO);
   goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 * CURRENT_INTEGER_RATIO);
   */
-  char log_msg[200];
+  //char log_msg[200];
+  //Aqui va a ir el polinomio (Podria ser tambien en matlab)
 
-  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1);
-  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2);
-  sprintf(log_msg, "Valor left:", goal_current_from_cmd[LEFT] , ", Valor right", goal_current_from_cmd[RIGHT]);
-  nh.loginfo(log_msg);
+  //Se recibe el valor en Ampers y se transforma a enteros segun la unidad dada en el manual 2.69mA
+  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 / .00269);
+  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 / .00269);
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
+
+  /*sprintf(log_msg, "Valor left: %i Valor right: %i ", goal_current_from_cmd[LEFT] , goal_current_from_cmd[RIGHT]);
+  nh.loginfo(log_msg);*/
   tTime[6] = millis();
 }
 /*******************************************************************************
@@ -248,13 +247,13 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 /*******************************************************************************
 * Publish msgs (CMD Velocity data from RC100 : angular velocity, linear velocity)
 *******************************************************************************/
-/*void publishCmdVelFromRC100Msg(void)
+void publishCmdVelFromRC100Msg(void)
 {
   cmd_vel_rc100_msg.linear.x  = goal_velocity_from_rc100[LINEAR];
   cmd_vel_rc100_msg.angular.z = goal_velocity_from_rc100[ANGULAR];
 
   cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
-}*/
+}
 
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
@@ -263,17 +262,22 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 void publishCmdTor(void)
 {
   bool dxl_comm_result = false;
-  int32_t l_value = 0;
-  int32_t r_value = 0;
+  uint16_t l_value = 0;
+  uint16_t r_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
 
+  //char log_msg[50];
+  //sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i", l_value,r_value);
+  //nh.loginfo(log_msg);
   if (dxl_comm_result = TRUE)
   {
     /*cmd_tor_msg.wheel_torque_1 = (float)l_value * INTEGER_CURRENT_RATIO;
     cmd_tor_msg.wheel_torque_2 = (float)r_value * INTEGER_CURRENT_RATIO
     */
-    cmd_tor_msg.wheel_torque_1 = (float)l_value;
-    cmd_tor_msg.wheel_torque_2 = (float)r_value;
+    //Cambio de entero a corriente (A)
+    //Aqui iria el otro polinomio
+    cmd_tor_msg.wheel_torque_1 = (float)l_value * .00269;
+    cmd_tor_msg.wheel_torque_2 = (float)r_value * .00269;
     tor_pub.publish(&cmd_tor_msg);
   }
   else
@@ -904,7 +908,7 @@ void sendDebuglog(void)
   DEBUG_SERIAL.println("Encoder(left) : " + String(encoder[LEFT]));
   DEBUG_SERIAL.println("Encoder(right) : " + String(encoder[RIGHT]));
 
-  int32_t current[WHEEL_NUM] = {0, 0};
+  uint16_t current[WHEEL_NUM] = {0, 0};
   motor_driver.readCurrent(current[LEFT], current[RIGHT]);
 
   DEBUG_SERIAL.println("Current(left) : " + String(current[LEFT]));

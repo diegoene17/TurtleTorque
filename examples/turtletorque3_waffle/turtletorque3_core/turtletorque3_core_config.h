@@ -87,7 +87,7 @@ void motorPowerCallback(const std_msgs::Bool& power_msg);
 void resetCallback(const std_msgs::Empty& reset_msg);
 
 // Function prototypes
-//void publishCmdVelFromRC100Msg(void);
+void publishCmdVelFromRC100Msg(void);
 void publishCmdTor(void);
 void publishImuMsg(void);
 void publishMagMsg(void);
@@ -141,7 +141,7 @@ char joint_state_header_frame_id[30];
 /*******************************************************************************
 * Subscriber
 *******************************************************************************/
-//ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
+ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
 ros::Subscriber<turtletorque3_msgs::WheelTorque> cmd_tor_sub("cmd_tor", commandTorqueCallback);
 
@@ -240,7 +240,7 @@ float goal_current[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_button[WHEEL_NUM] = {0.0, 0.0};
 float goal_velocity_from_cmd[WHEEL_NUM] = {0.0, 0.0};
 //Esto debe cambiar a float cuando tengamos la corriente-torque
-int64_t goal_current_from_cmd[WHEEL_NUM] = {0, 0};
+int goal_current_from_cmd[WHEEL_NUM] = {0, 0};
 float goal_velocity_from_rc100[WHEEL_NUM] = {0.0, 0.0};
 
 /*******************************************************************************
