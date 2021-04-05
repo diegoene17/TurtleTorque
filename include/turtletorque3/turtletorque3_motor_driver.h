@@ -32,6 +32,7 @@
 #define ADDR_X_PRESENT_VELOCITY         128
 #define ADDR_X_PRESENT_CURRENT          126
 #define ADDR_X_PRESENT_POSITION         132
+#define ADDR_X_PRESENT_PWM              124
 
 #define CURRENT_LIMIT                   38
 
@@ -49,6 +50,7 @@
 #define LEN_X_REALTIME_TICK             2
 #define LEN_X_PRESENT_CURRENT           2
 #define LEN_X_PRESENT_POSITION          4
+#define LEN_X_PRESENT_PWM               2
 
 #define PROTOCOL_VERSION                2.0     // Dynamixel protocol version 2.0
 
@@ -83,6 +85,7 @@ class TurtleTorque3MotorDriver
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
   bool readCurrent(uint16_t &left_value, uint16_t &right_value);
+  bool readPWM(uint16_t &left_value, uint16_t &right_value);
   bool writeVelocity(int64_t left_value, int64_t right_value);
   bool writeCurrent(int left_value, int right_value);                   //No sabemos si es int64 o int32
   bool controlMotor(int left_value, int right_value);
@@ -104,6 +107,7 @@ class TurtleTorque3MotorDriver
   dynamixel::GroupSyncWrite *groupSyncCurrentLimit_;
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
   dynamixel::GroupSyncRead *groupSyncReadCurrent_;
+  dynamixel::GroupSyncRead *groupSyncReadPWM_;
 };
 
 #endif // TURTLEBOT3_MOTOR_DRIVER_H_

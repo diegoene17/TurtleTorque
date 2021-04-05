@@ -101,7 +101,7 @@ void loop()
     //Podriamos matar el control con el mando y meter aqui el publishCmdTor
     //SIMON
     publishCmdTor();
-    publishCmdVelFromRC100Msg();
+    publishPWM();
     tTime[1] = t;
   }
 
@@ -171,7 +171,7 @@ void loop()
 /*******************************************************************************
 * Callback function for cmd_vel msg al final sera cmd_tor msg
 *******************************************************************************/
-
+/*
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 {
   goal_velocity_from_cmd[LINEAR]  = cmd_vel_msg.linear.x;
@@ -180,7 +180,7 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   goal_velocity_from_cmd[LINEAR]  = constrain(goal_velocity_from_cmd[LINEAR],  MIN_LINEAR_VELOCITY, MAX_LINEAR_VELOCITY);
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   tTime[6] = millis();
-}
+}*/
 void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
 {
   //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
@@ -247,14 +247,14 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 /*******************************************************************************
 * Publish msgs (CMD Velocity data from RC100 : angular velocity, linear velocity)
 *******************************************************************************/
-void publishCmdVelFromRC100Msg(void)
+/*void publishCmdVelFromRC100Msg(void)
 {
   cmd_vel_rc100_msg.linear.x  = goal_velocity_from_rc100[LINEAR];
   cmd_vel_rc100_msg.angular.z = goal_velocity_from_rc100[ANGULAR];
 
   cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
 }
-
+*/
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
 *******************************************************************************/
@@ -284,6 +284,23 @@ void publishCmdTor(void)
     return;
 }
 
+void publishPWM(void)
+{
+  bool dxl_comm_result = false;
+  uint16_t l_value = 0;
+  uint16_t r_value = 0;
+
+  dxl_comm_result = motor_driver.readPWM(l_value, r_value);
+
+  if (dxl_comm_result = TRUE)
+  {
+    pwm_msg.x = (float)l_value;
+    pwm_msg.y = (float)r_value;
+    pwm_pub.publish(&pwm_msg);
+  }
+  else
+    return;
+}
 
 /*******************************************************************************
 * Publish msgs (IMU data: angular velocity, linear acceleration, orientation)

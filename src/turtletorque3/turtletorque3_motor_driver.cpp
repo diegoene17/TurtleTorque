@@ -58,8 +58,9 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
 
   groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
   groupSyncCurrentLimit_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, CURRENT_LIMIT, LEN_X_CURRENT_LIMIT);
-  groupSyncReadEncoder_   = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
-  groupSyncReadCurrent_ = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+  groupSyncReadEncoder_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
+  groupSyncReadCurrent_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
+  groupSyncReadPWM_      = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_PWM, LEN_X_PRESENT_PWM);
 
   if (turtlebot3 == "Burger"){
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;
@@ -157,6 +158,38 @@ bool TurtleTorque3MotorDriver::readEncoder(int32_t &left_value, int32_t &right_v
   right_value = groupSyncReadEncoder_->getData(right_wheel_id_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
 
   groupSyncReadEncoder_->clearParam();
+  return true;
+}
+
+bool TurtleTorque3MotorDriver::readPWM(uint16_t &left_value, uint16_t &right_value)
+{
+  int dxl_comm_result = COMM_TX_FAIL;              // Communication result
+  uint8_t dxl_error = 0;                           //Communication error
+
+  // Read dynamixel1 present pwm
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,left_wheel_id_,ADDR_X_PRESENT_PWM,&left_value,&dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
+    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+  else if (dxl_error != 0)
+  {
+    Serial.println(packetHandler_->getRxPacketError(dxl_error));
+    return false;
+  }
+  // Read dynamixel2 present pwm
+  dxl_comm_result = packetHandler_->read2ByteTxRx(portHandler_,right_wheel_id_,ADDR_X_PRESENT_PWM,&right_value,&dxl_error);
+  if(dxl_comm_result != COMM_SUCCESS)
+  {
+    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+  else if (dxl_error != 0)
+  {
+    Serial.println(packetHandler_->getRxPacketError(dxl_error));
+    return false;
+  }
   return true;
 }
 

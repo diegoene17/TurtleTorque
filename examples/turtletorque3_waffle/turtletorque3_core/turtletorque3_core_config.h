@@ -81,7 +81,6 @@
 void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg);
 //Callback de torque
 void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg);
-//void commandCurrentCallback(const geometry_msgs::Twist& cmd_tor_msg);
 void soundCallback(const turtlebot3_msgs::Sound& sound_msg);
 void motorPowerCallback(const std_msgs::Bool& power_msg);
 void resetCallback(const std_msgs::Empty& reset_msg);
@@ -89,6 +88,7 @@ void resetCallback(const std_msgs::Empty& reset_msg);
 // Function prototypes
 void publishCmdVelFromRC100Msg(void);
 void publishCmdTor(void);
+void publishPWM(void);
 void publishImuMsg(void);
 void publishMagMsg(void);
 void publishSensorStateMsg(void);
@@ -173,6 +173,10 @@ ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 // Command torque of Turtlebot3
 turtletorque3_msgs::WheelTorque cmd_tor_msg;
 ros::Publisher tor_pub("tor", &cmd_tor_msg);
+
+// PWM of Turtlebot3
+geometry_msgs::Vector3 pwm_msg;
+ros::Publisher pwm_pub("pwm", &pwm_msg);
 
 // Odometry of Turtlebot3
 nav_msgs::Odometry odom;
