@@ -271,7 +271,7 @@ bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
   return true;
 }
 
-bool Turtlebot3MotorDriver::writeVelocity(int64_t left_value, int64_t right_value)
+/*bool Turtlebot3MotorDriver::writeVelocity(int64_t left_value, int64_t right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
@@ -308,7 +308,7 @@ bool Turtlebot3MotorDriver::writeVelocity(int64_t left_value, int64_t right_valu
   groupSyncWriteVelocity_->clearParam();
   return true;
 }
-
+*/
 
 bool TurtleTorque3MotorDriver::controlMotor(int left_value, int right_value)
 {
