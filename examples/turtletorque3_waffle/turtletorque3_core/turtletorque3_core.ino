@@ -30,7 +30,7 @@ void setup()
   nh.getHardware()->setBaud(115200);
 
 // modificar eso al crear los subscriber
-  nh.subscribe(cmd_vel_sub);
+  //nh.subscribe(cmd_vel_sub);
   nh.subscribe(cmd_tor_sub);
   nh.subscribe(sound_sub);
   nh.subscribe(motor_power_sub);
