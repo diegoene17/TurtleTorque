@@ -46,6 +46,7 @@ void setup()
   nh.advertise(joint_states_pub);
   nh.advertise(battery_state_pub);
   nh.advertise(mag_pub);
+  nh.advertise(pwm_pub);
 
   tf_broadcaster.init(nh);
 
