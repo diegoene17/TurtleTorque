@@ -141,7 +141,7 @@ char joint_state_header_frame_id[30];
 /*******************************************************************************
 * Subscriber
 *******************************************************************************/
-ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
+//ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
 ros::Subscriber<turtletorque3_msgs::WheelTorque> cmd_tor_sub("cmd_tor", commandTorqueCallback);
 
