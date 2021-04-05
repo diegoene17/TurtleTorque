@@ -86,7 +86,7 @@ void motorPowerCallback(const std_msgs::Bool& power_msg);
 void resetCallback(const std_msgs::Empty& reset_msg);
 
 // Function prototypes
-void publishCmdVelFromRC100Msg(void);
+//void publishCmdVelFromRC100Msg(void);
 void publishCmdTor(void);
 void publishPWM(void);
 void publishImuMsg(void);
@@ -167,8 +167,8 @@ sensor_msgs::Imu imu_msg;
 ros::Publisher imu_pub("imu", &imu_msg);
 
 // Command velocity of Turtlebot3 using RC100 remote controller
-geometry_msgs::Twist cmd_vel_rc100_msg;
-ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
+//geometry_msgs::Twist cmd_vel_rc100_msg;
+//ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
 // Command torque of Turtlebot3
 turtletorque3_msgs::WheelTorque cmd_tor_msg;

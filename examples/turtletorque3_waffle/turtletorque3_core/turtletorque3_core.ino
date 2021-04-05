@@ -39,7 +39,7 @@ void setup()
   nh.advertise(sensor_state_pub);
   nh.advertise(version_info_pub);
   nh.advertise(imu_pub);
-  nh.advertise(cmd_vel_rc100_pub);
+  //nh.advertise(cmd_vel_rc100_pub);
   //Torque
   nh.advertise(tor_pub);
   nh.advertise(odom_pub);
