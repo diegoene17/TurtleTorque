@@ -52,13 +52,12 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
     DEBUG_SERIAL.println("Failed to set baud rate(Motor Driver)");
     return false;
   }
-  groupSyncWriteVelocityLimit_ = new dyanamixel::GroupSyncWrite(portHandler_,packetHandler_,44,4);
-  setVelocityLimit();
+
   // Enable Dynamixel Torque
   setTorque(true);
 
-  groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
-
+  //groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
+  groupSyncWritePWM_     = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_PWM, LEN_X_GOAL_PWM);
 
   groupSyncCurrentLimit_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, CURRENT_LIMIT, LEN_X_CURRENT_LIMIT);
   groupSyncReadEncoder_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
@@ -77,57 +76,7 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   DEBUG_SERIAL.println("Success to init Motor Driver");
   return true;
 }
-bool TurtleTorque3MotorDriver::setVelocityLimit(void)
-{
-  bool dxl_addparam_result;
-  int8_t dxl_comm_result;
 
-  uint8_t left_data_byte[4];
-  uint8_t right_data_byte[4];
-
-  int32 limit = 1023;
-  left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(limit));
-  left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(limit));
-  left_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(limit));
-  left_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(limit));
-
-
-
-  dxl_addparam_result = groupSyncWriteVelocityLimit_->addParam(left_wheel_id_, left_data_byte);
-  //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
-
-  if (dxl_addparam_result != true){
-    //Borrar impresión cuando comprobemos
-    DEBUG_SERIAL.println("Fallo motor izquierdo");
-    return false;
-  }
-
-  right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(limit));
-  right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(limit));
-  right_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(limit));
-  right_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(limit));
-
-  dxl_addparam_result = groupSyncWriteVelocityLimit_->addParam(right_wheel_id_, right_data_byte);
-  //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
-  if (dxl_addparam_result != true){
-    //Borrar impresión cuando comprobemos
-    DEBUG_SERIAL.println("Fallo motor derecho");
-    return false;
-  }
-
-  dxl_comm_result = groupSyncWriteVelocityLimit_->txPacket();
-  //dxl_comm_result = groupSyncCurrentLimit_->txPacket();
-
-  if (dxl_comm_result != COMM_SUCCESS)
-  {
-    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
-    return false;
-  }
-
-  groupSyncWriteVelocityLimit_->clearParam();
-  //groupSyncCurrentLimit_->clearParam();
-  return true;
-}
 bool TurtleTorque3MotorDriver::setTorque(bool onoff)
 {
   uint8_t dxl_error = 0;
@@ -278,7 +227,7 @@ bool TurtleTorque3MotorDriver::readCurrent(uint16_t &left_value, uint16_t &right
   return true;
 }
 
-bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
+/*bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
@@ -322,53 +271,61 @@ bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
   groupSyncWriteCurrent_->clearParam();
   //groupSyncCurrentLimit_->clearParam();
   return true;
-}
+}*/
 
-/*bool Turtlebot3MotorDriver::writeVelocity(int64_t left_value, int64_t right_value)
+bool TurtleTorque3MotorDriver::writePWM(uint16_t left_value, uint16_t right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
 
-  uint8_t left_data_byte[4] = {0, };
-  uint8_t right_data_byte[4] = {0, };
+  uint8_t left_data_byte[2];
+  uint8_t right_data_byte[2];
 
 
-  left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(left_value));
-  left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(left_value));
-  left_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(left_value));
-  left_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(left_value));
+  left_data_byte[0] = DXL_LOBYTE(left_value);
+  left_data_byte[1] = DXL_HIBYTE(left_value);
 
-  dxl_addparam_result = groupSyncWriteVelocity_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
-  if (dxl_addparam_result != true)
+  dxl_addparam_result = groupSyncWritePWM_->addParam(left_wheel_id_, left_data_byte);
+
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    DEBUG_SERIAL.println("Fallo motor izquierdo");
     return false;
+  }
 
-  right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(right_value));
-  right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(right_value));
-  right_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(right_value));
-  right_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(right_value));
+  right_data_byte[0] = DXL_LOBYTE(right_value);
+  right_data_byte[1] = DXL_HIBYTE(right_value);
 
-  dxl_addparam_result = groupSyncWriteVelocity_->addParam(right_wheel_id_, (uint8_t*)&right_data_byte);
-  if (dxl_addparam_result != true)
+  dxl_addparam_result = groupSyncWritePWM_->addParam(right_wheel_id_, right_data_byte);
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    DEBUG_SERIAL.println("Fallo motor derecho");
     return false;
+  }
 
-  dxl_comm_result = groupSyncWriteVelocity_->txPacket();
+  dxl_comm_result = groupSyncWritePWM_->txPacket();
+
   if (dxl_comm_result != COMM_SUCCESS)
   {
     Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
     return false;
   }
 
-  groupSyncWriteVelocity_->clearParam();
+  groupSyncWritePWM_->clearParam();
   return true;
 }
-*/
 
-bool TurtleTorque3MotorDriver::controlMotor(int left_value, int right_value)
+bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
 {
   bool dxl_comm_result = false;
-  //Aqui iria el controlador en caso de ser necesario
+  int int_left_value = 0;
+  int int_right_value = 0;
+  //Aqui ira el lazo de control de corriente
+  //Esto es temporal (transformar el 100 a entero)
+  int_left_value = round(left_value / .113);
+  int_right_value = round(right_value / .113);
 
-  dxl_comm_result = writeCurrent(left_value, right_value);
+  dxl_comm_result = writePWM(int_left_value, int_right_value);
   if(dxl_comm_result == false)
     return false;
   return true;

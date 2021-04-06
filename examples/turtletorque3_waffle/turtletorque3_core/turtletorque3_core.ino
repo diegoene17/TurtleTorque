@@ -184,24 +184,18 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
 }*/
 void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
 {
-  //Creo que es mejor mover lo de convertir torque a correinte aqui, lo siguiente
-  //deberia ser multiplicado por la cosntante o bien la operación necesaria
+  //Aqui llegara en torque o corriente se mantendra en corriente hasta que se envie al controlador
+  //El control es el encargado de la conversion y PI
 
-  /*goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 * CURRENT_INTEGER_RATIO);
-  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 * CURRENT_INTEGER_RATIO);
-  */
-  //char log_msg[200];
   //Aqui va a ir el polinomio (Podria ser tambien en matlab)
 
   //Se recibe el valor en Ampers y se transforma a enteros segun la unidad dada en el manual 2.69mA
-  goal_current_from_cmd[LEFT] = round(cmd_tor_msg.wheel_torque_1 / .00269);
-  goal_current_from_cmd[RIGHT] = round(cmd_tor_msg.wheel_torque_2 / .00269);
+  goal_current_from_cmd[LEFT] = cmd_tor_msg.wheel_torque_1;
+  goal_current_from_cmd[RIGHT] = cmd_tor_msg.wheel_torque_2;
   //Mantiene la variable dentro de los limites
   goal_current_from_cmd[LEFT] = constrain(goal_current_from_cmd[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current_from_cmd[RIGHT] = constrain(goal_current_from_cmd[RIGHT], MIN_CURRENT, MAX_CURRENT);
 
-  /*sprintf(log_msg, "Valor left: %i Valor right: %i ", goal_current_from_cmd[LEFT] , goal_current_from_cmd[RIGHT]);
-  nh.loginfo(log_msg);*/
   tTime[6] = millis();
 }
 /*******************************************************************************
@@ -245,17 +239,7 @@ void resetCallback(const std_msgs::Empty& reset_msg)
   nh.loginfo(log_msg);
 }
 
-/*******************************************************************************
-* Publish msgs (CMD Velocity data from RC100 : angular velocity, linear velocity)
-*******************************************************************************/
-/*void publishCmdVelFromRC100Msg(void)
-{
-  cmd_vel_rc100_msg.linear.x  = goal_velocity_from_rc100[LINEAR];
-  cmd_vel_rc100_msg.angular.z = goal_velocity_from_rc100[ANGULAR];
 
-  cmd_vel_rc100_pub.publish(&cmd_vel_rc100_msg);
-}
-*/
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
 *******************************************************************************/

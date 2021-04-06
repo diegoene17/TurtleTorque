@@ -33,7 +33,11 @@
 
 #define MAX_LINEAR_VELOCITY              (WHEEL_RADIUS * 2 * 3.14159265359 * 77 / 60) // m/s  (BURGER : 61[rpm], WAFFLE : 77[rpm])
 #define MAX_ANGULAR_VELOCITY             (MAX_LINEAR_VELOCITY / TURNING_RADIUS)       // rad/s
-#define MAX_CURRENT                      1193
+//CAmbiar al torque maximo despues
+#define MAX_CURRENT                      100
+
+#define MAX_PWM                          885
+#define MIN_PWM                          -MAX_PWM
 
 #define MIN_LINEAR_VELOCITY              -MAX_LINEAR_VELOCITY
 #define MIN_ANGULAR_VELOCITY             -MAX_ANGULAR_VELOCITY

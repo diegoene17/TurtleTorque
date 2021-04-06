@@ -27,6 +27,7 @@
 #define ADDR_X_TORQUE_ENABLE            64
 #define ADDR_X_GOAL_VELOCITY            104
 #define ADDR_X_GOAL_CURRENT             102
+#define ADDR_X_GOAL_PWM                 100
 #define ADDR_X_GOAL_POSITION            116
 #define ADDR_X_REALTIME_TICK            120
 #define ADDR_X_PRESENT_VELOCITY         128
@@ -46,6 +47,7 @@
 #define LEN_X_TORQUE_ENABLE             1
 #define LEN_X_GOAL_POSITION             4
 #define LEN_X_GOAL_CURRENT              2
+#define LEN_X_GOAL_PWM                  2
 #define LEN_X_CURRENT_LIMIT             2
 #define LEN_X_REALTIME_TICK             2
 #define LEN_X_PRESENT_CURRENT           2
@@ -81,15 +83,15 @@ class TurtleTorque3MotorDriver
   ~TurtleTorque3MotorDriver();
   bool init(String turtlebot3);
   void close(void);
-  bool setVelocityLimit(void);
   bool setTorque(bool onoff);
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
   bool readCurrent(uint16_t &left_value, uint16_t &right_value);
   bool readPWM(uint16_t &left_value, uint16_t &right_value);
   bool writeVelocity(int64_t left_value, int64_t right_value);
-  bool writeCurrent(int left_value, int right_value);                   //No sabemos si es int64 o int32
-  bool controlMotor(int left_value, int right_value);
+  bool writePWM(uint16_t left_value, uint16_t right_value);
+  //bool writeCurrent(int left_value, int right_value);                   //No sabemos si es int64 o int32
+  bool controlMotor(float left_value, float right_value);
 
  private:
   uint32_t baudrate_;
@@ -104,9 +106,9 @@ class TurtleTorque3MotorDriver
   dynamixel::PortHandler *portHandler_;
   dynamixel::PacketHandler *packetHandler_;
 
-  dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
+  //dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
   dynamixel::GroupSyncWrite *groupSyncCurrentLimit_;
-  dynamixel::groupSyncWriteVelocityLimit_ *groupSyncWriteVelocity_;
+  dynamixel::GroupSyncWrite *groupSyncWritePWM_;
 
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
   dynamixel::GroupSyncRead *groupSyncReadCurrent_;
