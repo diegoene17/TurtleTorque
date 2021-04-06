@@ -81,6 +81,7 @@ class TurtleTorque3MotorDriver
   ~TurtleTorque3MotorDriver();
   bool init(String turtlebot3);
   void close(void);
+  bool setVelocityLimit(void);
   bool setTorque(bool onoff);
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
