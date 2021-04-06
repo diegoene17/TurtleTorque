@@ -52,11 +52,14 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
     DEBUG_SERIAL.println("Failed to set baud rate(Motor Driver)");
     return false;
   }
-
+  groupSyncWriteVelocityLimit_ = new dyanamixel::GroupSyncWrite(portHandler_,packetHandler_,44,4);
+  setVelocityLimit();
   // Enable Dynamixel Torque
   setTorque(true);
 
   groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
+
+
   groupSyncCurrentLimit_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, CURRENT_LIMIT, LEN_X_CURRENT_LIMIT);
   groupSyncReadEncoder_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
   groupSyncReadCurrent_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
@@ -74,7 +77,57 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   DEBUG_SERIAL.println("Success to init Motor Driver");
   return true;
 }
+bool TurtleTorque3MotorDriver::setVelocityLimit(void)
+{
+  bool dxl_addparam_result;
+  int8_t dxl_comm_result;
 
+  uint8_t left_data_byte[4];
+  uint8_t right_data_byte[4];
+
+  int32 limit = 1023;
+  left_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(limit));
+  left_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(limit));
+  left_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(limit));
+  left_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(limit));
+
+
+
+  dxl_addparam_result = groupSyncWriteVelocityLimit_->addParam(left_wheel_id_, left_data_byte);
+  //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
+
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    DEBUG_SERIAL.println("Fallo motor izquierdo");
+    return false;
+  }
+
+  right_data_byte[0] = DXL_LOBYTE(DXL_LOWORD(limit));
+  right_data_byte[1] = DXL_HIBYTE(DXL_LOWORD(limit));
+  right_data_byte[2] = DXL_LOBYTE(DXL_HIWORD(limit));
+  right_data_byte[3] = DXL_HIBYTE(DXL_HIWORD(limit));
+
+  dxl_addparam_result = groupSyncWriteVelocityLimit_->addParam(right_wheel_id_, right_data_byte);
+  //dxl_addparam_result = groupSyncCurrentLimit_->addParam(left_wheel_id_, (uint8_t*)&left_data_byte);
+  if (dxl_addparam_result != true){
+    //Borrar impresión cuando comprobemos
+    DEBUG_SERIAL.println("Fallo motor derecho");
+    return false;
+  }
+
+  dxl_comm_result = groupSyncWriteVelocityLimit_->txPacket();
+  //dxl_comm_result = groupSyncCurrentLimit_->txPacket();
+
+  if (dxl_comm_result != COMM_SUCCESS)
+  {
+    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
+    return false;
+  }
+
+  groupSyncWriteVelocityLimit_->clearParam();
+  //groupSyncCurrentLimit_->clearParam();
+  return true;
+}
 bool TurtleTorque3MotorDriver::setTorque(bool onoff)
 {
   uint8_t dxl_error = 0;
