@@ -106,6 +106,8 @@ class TurtleTorque3MotorDriver
 
   dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
   dynamixel::GroupSyncWrite *groupSyncCurrentLimit_;
+  dynamixel::groupSyncWriteVelocityLimit_ *groupSyncWriteVelocity_;
+
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
   dynamixel::GroupSyncRead *groupSyncReadCurrent_;
   dynamixel::GroupSyncRead *groupSyncReadPWM_;
