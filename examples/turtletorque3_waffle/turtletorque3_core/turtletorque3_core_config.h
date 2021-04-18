@@ -88,7 +88,7 @@ void resetCallback(const std_msgs::Empty& reset_msg);
 // Function prototypes
 //void publishCmdVelFromRC100Msg(void);
 void publishCmdTor(void);
-void publishPWM(void);
+//void publishPWM(void);
 void publishImuMsg(void);
 void publishMagMsg(void);
 void publishSensorStateMsg(void);
@@ -175,8 +175,8 @@ turtletorque3_msgs::WheelTorque cmd_tor_msg;
 ros::Publisher tor_pub("tor", &cmd_tor_msg);
 
 // PWM of Turtlebot3
-geometry_msgs::Vector3 pwm_msg;
-ros::Publisher pwm_pub("pwm", &pwm_msg);
+//geometry_msgs::Vector3 pwm_msg;
+//ros::Publisher pwm_pub("pwm", &pwm_msg);
 
 // Odometry of Turtlebot3
 nav_msgs::Odometry odom;

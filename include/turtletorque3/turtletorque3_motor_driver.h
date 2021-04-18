@@ -87,10 +87,10 @@ class TurtleTorque3MotorDriver
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
   bool readCurrent(uint16_t &left_value, uint16_t &right_value);
-  bool readPWM(uint16_t &left_value, uint16_t &right_value);
+  //bool readPWM(uint16_t &left_value, uint16_t &right_value);
   bool writeVelocity(int64_t left_value, int64_t right_value);
-  bool writePWM(uint16_t left_value, uint16_t right_value);
-  //bool writeCurrent(int left_value, int right_value);                   //No sabemos si es int64 o int32
+  //bool writePWM(uint16_t left_value, uint16_t right_value);
+  bool writeCurrent(int left_value, int right_value);                   //No sabemos si es int64 o int32
   bool controlMotor(float left_value, float right_value);
 
  private:
@@ -106,13 +106,13 @@ class TurtleTorque3MotorDriver
   dynamixel::PortHandler *portHandler_;
   dynamixel::PacketHandler *packetHandler_;
 
-  //dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
+  dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
   dynamixel::GroupSyncWrite *groupSyncCurrentLimit_;
-  dynamixel::GroupSyncWrite *groupSyncWritePWM_;
+  //dynamixel::GroupSyncWrite *groupSyncWritePWM_;
 
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
   dynamixel::GroupSyncRead *groupSyncReadCurrent_;
-  dynamixel::GroupSyncRead *groupSyncReadPWM_;
+  //dynamixel::GroupSyncRead *groupSyncReadPWM_;
 };
 
 #endif // TURTLEBOT3_MOTOR_DRIVER_H_

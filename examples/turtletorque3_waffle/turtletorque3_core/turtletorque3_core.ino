@@ -46,7 +46,7 @@ void setup()
   nh.advertise(joint_states_pub);
   nh.advertise(battery_state_pub);
   nh.advertise(mag_pub);
-  nh.advertise(pwm_pub);
+  //nh.advertise(pwm_pub);
 
   tf_broadcaster.init(nh);
 
@@ -102,7 +102,7 @@ void loop()
     //Podriamos matar el control con el mando y meter aqui el publishCmdTor
     //SIMON
     publishCmdTor();
-    publishPWM();
+    //publishPWM();
     tTime[1] = t;
   }
 
@@ -269,7 +269,7 @@ void publishCmdTor(void)
     return;
 }
 
-void publishPWM(void)
+/*void publishPWM(void)
 {
   bool dxl_comm_result = false;
   uint16_t l_value = 0;
@@ -285,7 +285,7 @@ void publishPWM(void)
   }
   else
     return;
-}
+}*/
 
 /*******************************************************************************
 * Publish msgs (IMU data: angular velocity, linear acceleration, orientation)

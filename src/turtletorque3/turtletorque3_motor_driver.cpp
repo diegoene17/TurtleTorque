@@ -56,8 +56,8 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   // Enable Dynamixel Torque
   setTorque(true);
 
-  //groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
-  groupSyncWritePWM_     = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_PWM, LEN_X_GOAL_PWM);
+  groupSyncWriteCurrent_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_CURRENT, LEN_X_GOAL_CURRENT);
+  //groupSyncWritePWM_     = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, ADDR_X_GOAL_PWM, LEN_X_GOAL_PWM);
 
   groupSyncCurrentLimit_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, CURRENT_LIMIT, LEN_X_CURRENT_LIMIT);
   groupSyncReadEncoder_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
@@ -163,7 +163,7 @@ bool TurtleTorque3MotorDriver::readEncoder(int32_t &left_value, int32_t &right_v
   return true;
 }
 
-bool TurtleTorque3MotorDriver::readPWM(uint16_t &left_value, uint16_t &right_value)
+/*bool TurtleTorque3MotorDriver::readPWM(uint16_t &left_value, uint16_t &right_value)
 {
   int dxl_comm_result = COMM_TX_FAIL;              // Communication result
   uint8_t dxl_error = 0;                           //Communication error
@@ -193,7 +193,7 @@ bool TurtleTorque3MotorDriver::readPWM(uint16_t &left_value, uint16_t &right_val
     return false;
   }
   return true;
-}
+}*/
 
 bool TurtleTorque3MotorDriver::readCurrent(uint16_t &left_value, uint16_t &right_value)
 {
@@ -227,7 +227,7 @@ bool TurtleTorque3MotorDriver::readCurrent(uint16_t &left_value, uint16_t &right
   return true;
 }
 
-/*bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
+bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
@@ -271,9 +271,9 @@ bool TurtleTorque3MotorDriver::readCurrent(uint16_t &left_value, uint16_t &right
   groupSyncWriteCurrent_->clearParam();
   //groupSyncCurrentLimit_->clearParam();
   return true;
-}*/
+}
 
-bool TurtleTorque3MotorDriver::writePWM(uint16_t left_value, uint16_t right_value)
+/*bool TurtleTorque3MotorDriver::writePWM(uint16_t left_value, uint16_t right_value)
 {
   bool dxl_addparam_result;
   int8_t dxl_comm_result;
@@ -313,7 +313,7 @@ bool TurtleTorque3MotorDriver::writePWM(uint16_t left_value, uint16_t right_valu
 
   groupSyncWritePWM_->clearParam();
   return true;
-}
+}*/
 
 bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
 {
@@ -322,10 +322,11 @@ bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
   int int_right_value = 0;
   //Aqui ira el lazo de control de corriente
   //Esto es temporal (transformar el 100 a entero)
+  //Cambios a corriente
   int_left_value = round(left_value / .113);
   int_right_value = round(right_value / .113);
 
-  dxl_comm_result = writePWM(int_left_value, int_right_value);
+  dxl_comm_result = writeaCurrent(int_left_value, int_right_value);
   if(dxl_comm_result == false)
     return false;
   return true;
