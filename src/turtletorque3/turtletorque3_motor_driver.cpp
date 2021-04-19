@@ -62,7 +62,7 @@ bool TurtleTorque3MotorDriver::init(String turtlebot3)
   groupSyncCurrentLimit_ = new dynamixel::GroupSyncWrite(portHandler_, packetHandler_, CURRENT_LIMIT, LEN_X_CURRENT_LIMIT);
   groupSyncReadEncoder_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_POSITION, LEN_X_PRESENT_POSITION);
   groupSyncReadCurrent_  = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_CURRENT, LEN_X_PRESENT_CURRENT);
-  groupSyncReadPWM_      = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_PWM, LEN_X_PRESENT_PWM);
+  //groupSyncReadPWM_      = new dynamixel::GroupSyncRead(portHandler_, packetHandler_, ADDR_X_PRESENT_PWM, LEN_X_PRESENT_PWM);
 
   if (turtlebot3 == "Burger"){
     dynamixel_limit_max_velocity_ = BURGER_DXL_LIMIT_MAX_VELOCITY;

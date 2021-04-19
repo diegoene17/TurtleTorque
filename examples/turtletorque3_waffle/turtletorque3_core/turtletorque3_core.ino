@@ -14,7 +14,8 @@
 * limitations under the License.
 *******************************************************************************/
 
-/* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
+/* Original code Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
+/* Modification authors: Diego Garcia, Valeria Plascencia */
 
 #include "turtletorque3_core_config.h"
 
@@ -182,14 +183,12 @@ void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
   goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   tTime[6] = millis();
 }*/
+
+//Esta funcion se ejecuta cuando el sistema recibe una peticion al publisher de ROS
+//Cambiar nombre a corriente
 void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
 {
-  //Aqui llegara en torque o corriente se mantendra en corriente hasta que se envie al controlador
-  //El control es el encargado de la conversion y PI
-
-  //Aqui va a ir el polinomio (Podria ser tambien en matlab)
-
-  //Se recibe el valor en Ampers y se transforma a enteros segun la unidad dada en el manual 2.69mA
+  //Se asigna el valor recibido por el msg de WheelTorque
   goal_current_from_cmd[LEFT] = cmd_tor_msg.wheel_torque_1;
   goal_current_from_cmd[RIGHT] = cmd_tor_msg.wheel_torque_2;
   tTime[6] = millis();
@@ -239,7 +238,7 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 /*******************************************************************************
 * Publish msgs (CMD Torque data)
 *******************************************************************************/
-
+//Cambiar nombre a corriente
 void publishCmdTor(void)
 {
   bool dxl_comm_result = false;
