@@ -322,7 +322,7 @@ bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
   int int_right_value = 0;
 
   int_left_value = left_value;
-  int_right_value = right_value
+  int_right_value = right_value;
 
   int_left_value = round(left_value / .00269);
   int_right_value = round(right_value / .00269);
