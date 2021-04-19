@@ -368,7 +368,7 @@ void testMotor(uint8_t id)
 
     toggle = 0;
     pre_time = millis();
-    write(portHandler, packetHandler2, id, 100, 2, 300);
+    write(portHandler, packetHandler2, id, 102, 2, 300);
     while (1)
     {
       if (CMD_SERIAL.available())
@@ -385,15 +385,15 @@ void testMotor(uint8_t id)
 
         if (toggle)
         {
-          write(portHandler, packetHandler2, id, 100, 2, 0);
+          write(portHandler, packetHandler2, id, 102, 2, 0);
         }
         else
         {
-          write(portHandler, packetHandler2, id, 100, 2, 300);
+          write(portHandler, packetHandler2, id, 102, 2, 300);
         }
       }
     }
-    write(portHandler, packetHandler2, id, 100, 2, 0);
+    write(portHandler, packetHandler2, id, 102, 2, 0);
   }
   else
   {
