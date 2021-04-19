@@ -37,8 +37,6 @@
 
 #define CURRENT_LIMIT                   38
 
-#define MAX_CURRENT                      1193
-#define MIN_CURRENT                      -MAX_CURRENT
 
 
 // Limit values (XM430-W210-T and XM430-W350-T)
