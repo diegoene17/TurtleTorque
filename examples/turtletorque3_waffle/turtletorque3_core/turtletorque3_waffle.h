@@ -35,8 +35,8 @@
 #define MAX_ANGULAR_VELOCITY             (MAX_LINEAR_VELOCITY / TURNING_RADIUS)       // rad/s
 
 
-#define MAX_PWM                          885
-#define MIN_PWM                          -MAX_PWM
+#define MAX_CURRENT                         3.2
+#define MIN_CURRENT                          -MAX_CURRENT
 
 #define MIN_LINEAR_VELOCITY              -MAX_LINEAR_VELOCITY
 #define MIN_ANGULAR_VELOCITY             -MAX_ANGULAR_VELOCITY

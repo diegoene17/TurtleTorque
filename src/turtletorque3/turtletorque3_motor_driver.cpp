@@ -324,9 +324,6 @@ bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
   int_left_value = round(left_value / .00269);
   int_right_value = round(right_value / .00269);
 
-  int_left_value = constrain(int_left_value, MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
-  int_right_value = constrain(int_right_value, MIN_CURRENT, MAX_CURRENT);
-
   dxl_comm_result = writeCurrent(int_left_value, int_right_value);
   if(dxl_comm_result == false)
     return false;
