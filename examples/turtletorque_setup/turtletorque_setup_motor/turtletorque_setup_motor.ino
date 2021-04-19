@@ -316,7 +316,7 @@ bool setupMotorLeft(void)
     write(portHandler, packetHandler2, tb3_id, 8, 1, 3);
     portHandler->setBaudRate(1000000);
     write(portHandler, packetHandler2, tb3_id, 10, 1, 0);
-    write(portHandler, packetHandler2, tb3_id, 11, 1, 16);
+    write(portHandler, packetHandler2, tb3_id, 11, 1, 0);
     CMD_SERIAL.println("    ok");
   }
 }
@@ -338,7 +338,7 @@ bool setupMotorRight(void)
     write(portHandler, packetHandler2, tb3_id, 8, 1, 3);
     portHandler->setBaudRate(1000000);
     write(portHandler, packetHandler2, tb3_id, 10, 1, 1);
-    write(portHandler, packetHandler2, tb3_id, 11, 1, 16);
+    write(portHandler, packetHandler2, tb3_id, 11, 1, 0);
     CMD_SERIAL.println("    ok");
   }
 }

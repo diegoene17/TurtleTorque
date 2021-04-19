@@ -320,9 +320,6 @@ bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
   bool dxl_comm_result = false;
   int int_left_value = 0;
   int int_right_value = 0;
-  //Aqui ira el lazo de control de corriente
-  //Esto es temporal (transformar el 100 a entero)
-  //Cambios a corriente
 
   int_left_value = round(left_value / .00269);
   int_right_value = round(right_value / .00269);
