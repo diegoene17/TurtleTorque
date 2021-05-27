@@ -1,20 +1,3 @@
-/*******************************************************************************
-* Copyright 2016 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
-
-/* Original code Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho, Gilbert */
 /* Modification authors: Diego Garcia, Valeria Plascencia */
 
 #include "turtletorque3_core_config.h"
@@ -32,7 +15,7 @@ void setup()
 
 // modificar eso al crear los subscriber
   //nh.subscribe(cmd_vel_sub);
-  nh.subscribe(cmd_tor_sub);
+  nh.subscribe(cmd_cur_sub);
   nh.subscribe(sound_sub);
   nh.subscribe(motor_power_sub);
   nh.subscribe(reset_sub);
@@ -42,7 +25,7 @@ void setup()
   nh.advertise(imu_pub);
   //nh.advertise(cmd_vel_rc100_pub);
   //Torque
-  nh.advertise(tor_pub);
+  nh.advertise(cur_pub);
   nh.advertise(odom_pub);
   nh.advertise(joint_states_pub);
   nh.advertise(battery_state_pub);
@@ -85,7 +68,7 @@ void loop()
   updateVariable(nh.connected());
   updateTFPrefix(nh.connected());
 
-  if ((t-tTime[0]) >= (1000 / CONTROL_MOTOR_SPEED_FREQUENCY))
+  if ((t-tTime[0]) >= (1000 / CONTROL_MOTOR_CURRENT_FREQUENCY))
   {
     //updateGoalTorque()?¿?¿;
     if ((t-tTime[6]) > CONTROL_MOTOR_TIMEOUT)
@@ -98,12 +81,9 @@ void loop()
     tTime[0] = t;
   }
 
-  if ((t-tTime[1]) >= (1000 / CMD_VEL_PUBLISH_FREQUENCY))
+  if ((t-tTime[1]) >= (1000 / CMD_CUR_PUBLISH_FREQUENCY))
   {
-    //Podriamos matar el control con el mando y meter aqui el publishCmdTor
-    //SIMON
-    publishCmdTor();
-    //publishPWM();
+    publishCmdCur();
     tTime[1] = t;
   }
 
@@ -170,27 +150,13 @@ void loop()
   waitForSerialLink(nh.connected());
 }
 
-/*******************************************************************************
-* Callback function for cmd_vel msg al final sera cmd_tor msg
-*******************************************************************************/
-/*
-void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg)
-{
-  goal_velocity_from_cmd[LINEAR]  = cmd_vel_msg.linear.x;
-  goal_velocity_from_cmd[ANGULAR] = cmd_vel_msg.angular.z;
-
-  goal_velocity_from_cmd[LINEAR]  = constrain(goal_velocity_from_cmd[LINEAR],  MIN_LINEAR_VELOCITY, MAX_LINEAR_VELOCITY);
-  goal_velocity_from_cmd[ANGULAR] = constrain(goal_velocity_from_cmd[ANGULAR], MIN_ANGULAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  tTime[6] = millis();
-}*/
-
 //Esta funcion se ejecuta cuando el sistema recibe una peticion al publisher de ROS
 //Cambiar nombre a corriente
-void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg)
+void commandCurrentCallback(const turtletorque3_msgs::WheelTorque& cmd_cur_msg)
 {
   //Se asigna el valor recibido por el msg de WheelTorque
-  goal_current[LEFT] = cmd_tor_msg.wheel_torque_1;
-  goal_current[RIGHT] = cmd_tor_msg.wheel_torque_2;
+  goal_current[LEFT] = cmd_cur_msg.wheel_torque_1;
+  goal_current[RIGHT] = cmd_cur_msg.wheel_torque_2;
 
   goal_current[LEFT] = constrain(goal_current[LEFT], MIN_CURRENT, MAX_CURRENT); //VALORES A MODIFICAR CUANDO YA SEPAMOS LA CONSTANTE
   goal_current[RIGHT] = constrain(goal_current[RIGHT], MIN_CURRENT, MAX_CURRENT);
@@ -245,7 +211,7 @@ void resetCallback(const std_msgs::Empty& reset_msg)
 * Publish msgs (CMD Torque data)
 *******************************************************************************/
 //Cambiar nombre a corriente
-void publishCmdTor(void)
+void publishCmdCur(void)
 {
   bool dxl_comm_result = false;
   uint16_t l_value = 0;
@@ -262,31 +228,13 @@ void publishCmdTor(void)
     */
     //Cambio de entero a corriente (A)
     //Aqui iria el otro polinomio
-    cmd_tor_msg.wheel_torque_1 = (float)l_value * .00269;
-    cmd_tor_msg.wheel_torque_2 = (float)r_value * .00269;
-    tor_pub.publish(&cmd_tor_msg);
+    cmd_cur_msg.wheel_torque_1 = (float)l_value * .00269;
+    cmd_cur_msg.wheel_torque_2 = (float)r_value * .00269;
+    cur_pub.publish(&cmd_cur_msg);
   }
   else
     return;
 }
-
-/*void publishPWM(void)
-{
-  bool dxl_comm_result = false;
-  uint16_t l_value = 0;
-  uint16_t r_value = 0;
-
-  dxl_comm_result = motor_driver.readPWM(l_value, r_value);
-
-  if (dxl_comm_result = TRUE)
-  {
-    pwm_msg.x = (float)l_value;
-    pwm_msg.y = (float)r_value;
-    pwm_pub.publish(&pwm_msg);
-  }
-  else
-    return;
-}*/
 
 /*******************************************************************************
 * Publish msgs (IMU data: angular velocity, linear acceleration, orientation)

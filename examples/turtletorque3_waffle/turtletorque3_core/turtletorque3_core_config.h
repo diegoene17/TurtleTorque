@@ -35,7 +35,7 @@
 #include <turtlebot3_msgs/Sound.h>
 #include <turtlebot3_msgs/VersionInfo.h>
 
-#include <turtletorque3_msgs/WheelTorque.h>
+//#include <turtletorque3_msgs/WheelTorque.h>
 
 //Cambiar nombre a estos, para evitar los problemas de viejas librerias
 #include <TurtleTorque3.h>
@@ -45,10 +45,10 @@
 
 #define FIRMWARE_VER "1.2.6"
 
-#define CONTROL_MOTOR_SPEED_FREQUENCY          30   //hz
+#define CONTROL_MOTOR_CURRENT_FREQUENCY          30   //hz
 #define CONTROL_MOTOR_TIMEOUT                  2000  //ms
 #define IMU_PUBLISH_FREQUENCY                  200  //hz
-#define CMD_VEL_PUBLISH_FREQUENCY              30   //hz
+#define CMD_CUR_PUBLISH_FREQUENCY              30   //hz
 //de torque
 //#define CMD_TOR_PUBLISH_FREQUENCY              30   //hz
 #define DRIVE_INFORMATION_PUBLISH_FREQUENCY    30   //hz
@@ -78,16 +78,15 @@
 #define DEBUG_SERIAL                     SerialBT2
 
 // Callback function prototypes
-//void commandVelocityCallback(const geometry_msgs::Twist& cmd_vel_msg);
-//Callback de torque
-void commandTorqueCallback(const turtletorque3_msgs::WheelTorque& cmd_tor_msg);
+//Callback de corriente, cambiar mensaje cuando cambie nombre
+void commandCurrentCallback(const turtletorque3_msgs::WheelTorque& cmd_cur_msg);
 void soundCallback(const turtlebot3_msgs::Sound& sound_msg);
 void motorPowerCallback(const std_msgs::Bool& power_msg);
 void resetCallback(const std_msgs::Empty& reset_msg);
 
 // Function prototypes
 //void publishCmdVelFromRC100Msg(void);
-void publishCmdTor(void);
+void publishCmdCur(void);
 //void publishPWM(void);
 void publishImuMsg(void);
 void publishMagMsg(void);
@@ -141,9 +140,8 @@ char joint_state_header_frame_id[30];
 /*******************************************************************************
 * Subscriber
 *******************************************************************************/
-//ros::Subscriber<geometry_msgs::Twist> cmd_vel_sub("cmd_vel", commandVelocityCallback);
 
-ros::Subscriber<turtletorque3_msgs::WheelTorque> cmd_tor_sub("cmd_tor", commandTorqueCallback);
+ros::Subscriber<turtletorque3_msgs::WheelTorque> cmd_cur_sub("cmd_cur", commandCurrentCallback);
 
 ros::Subscriber<turtlebot3_msgs::Sound> sound_sub("sound", soundCallback);
 
@@ -171,8 +169,8 @@ ros::Publisher imu_pub("imu", &imu_msg);
 //ros::Publisher cmd_vel_rc100_pub("cmd_vel_rc100", &cmd_vel_rc100_msg);
 
 // Command torque of Turtlebot3
-turtletorque3_msgs::WheelTorque cmd_tor_msg;
-ros::Publisher tor_pub("tor", &cmd_tor_msg);
+turtletorque3_msgs::WheelTorque cmd_cur_msg;
+ros::Publisher cur_pub("cur", &cmd_cur_msg);
 
 // PWM of Turtlebot3
 //geometry_msgs::Vector3 pwm_msg;

@@ -1,21 +1,3 @@
-/*******************************************************************************
-* Copyright 2016 ROBOTIS CO., LTD.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*******************************************************************************/
-
-/* Authors: Yoonseok Pyo, Leon Jung, Darby Lim, HanCheol Cho */
-
 #ifndef TURTLETORQUE3_MOTOR_DRIVER_H_
 #define TURTLETORQUE3_MOTOR_DRIVER_H_
 
@@ -88,10 +70,7 @@ class TurtleTorque3MotorDriver
   bool getTorque();
   bool readEncoder(int32_t &left_value, int32_t &right_value);
   bool readCurrent(uint16_t &left_value, uint16_t &right_value);
-  //bool readPWM(uint16_t &left_value, uint16_t &right_value);
-  bool writeVelocity(int64_t left_value, int64_t right_value);
-  //bool writePWM(uint16_t left_value, uint16_t right_value);
-  bool writeCurrent(int left_value, int right_value);                   //No sabemos si es int64 o int32
+  bool writeCurrent(int left_value, int right_value);
   bool controlMotor(float left_value, float right_value);
 
  private:
@@ -101,19 +80,18 @@ class TurtleTorque3MotorDriver
   uint8_t right_wheel_id_;
   bool torque_;
 
-  uint16_t dynamixel_limit_max_velocity_;
   uint16_t dynamixel_limit_max_current_;
+  uint16_t dynamixel_limit_max_velocity_;
 
   dynamixel::PortHandler *portHandler_;
   dynamixel::PacketHandler *packetHandler_;
 
   dynamixel::GroupSyncWrite *groupSyncWriteCurrent_;
   dynamixel::GroupSyncWrite *groupSyncCurrentLimit_;
-  //dynamixel::GroupSyncWrite *groupSyncWritePWM_;
 
   dynamixel::GroupSyncRead *groupSyncReadEncoder_;
   dynamixel::GroupSyncRead *groupSyncReadCurrent_;
-  //dynamixel::GroupSyncRead *groupSyncReadPWM_;
+
 };
 
 #endif // TURTLEBOT3_MOTOR_DRIVER_H_
