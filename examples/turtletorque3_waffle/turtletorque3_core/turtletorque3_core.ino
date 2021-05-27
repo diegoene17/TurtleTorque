@@ -235,8 +235,8 @@ void publishCmdCur(void)
     */
     //Cambio de entero a corriente (A)
     //Aqui iria el otro polinomio
-    cmd_cur_msg.wheel_torque_1 = (float)l_value * .00269;
-    cmd_cur_msg.wheel_torque_2 = (float)r_value * .00269;
+    cmd_cur_msg.wheel_torque_1 = (float)lr_value * .00269;
+    cmd_cur_msg.wheel_torque_2 = (float)rr_value * .00269;
     cur_pub.publish(&cmd_cur_msg);
   }
   else
