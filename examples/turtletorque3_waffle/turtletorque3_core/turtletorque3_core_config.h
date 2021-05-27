@@ -95,6 +95,9 @@ void publishVersionInfoMsg(void);
 void publishBatteryStateMsg(void);
 void publishDriveInformation(void);
 
+//Support functions
+int returnSigned(uint16_t value);
+
 ros::Time rosNow(void);
 ros::Time addMicros(ros::Time & t, uint32_t _micros); // deprecated
 

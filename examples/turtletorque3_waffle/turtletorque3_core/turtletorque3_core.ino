@@ -216,7 +216,14 @@ void publishCmdCur(void)
   bool dxl_comm_result = false;
   uint16_t l_value = 0;
   uint16_t r_value = 0;
+  int lr_value = 0;
+  int rr_value = 0;
   dxl_comm_result = motor_driver.readCurrent(l_value, r_value);
+
+  //Comprobamos si es negativo
+
+  lr_value = returnSigned(l_value);
+  rr_value = returnSigned(r_value);
 
   //char log_msg[50];
   //sprintf(log_msg, "Valor izquierdo: %i Valor derecho %i", l_value,r_value);
@@ -235,7 +242,17 @@ void publishCmdCur(void)
   else
     return;
 }
-
+int returnSigned(uint16_t value){
+  int valueInt = 0;
+  if(bitRead(value,15) == 1){
+    value = (value - 1);
+    value = ~value;
+    valueInt = -value;
+  }else{
+    valueInt = value;
+  }
+  return valueInt;
+}
 /*******************************************************************************
 * Publish msgs (IMU data: angular velocity, linear acceleration, orientation)
 *******************************************************************************/

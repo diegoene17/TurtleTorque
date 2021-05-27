@@ -273,48 +273,6 @@ bool TurtleTorque3MotorDriver::writeCurrent(int left_value, int right_value)
   return true;
 }
 
-/*bool TurtleTorque3MotorDriver::writePWM(uint16_t left_value, uint16_t right_value)
-{
-  bool dxl_addparam_result;
-  int8_t dxl_comm_result;
-
-  uint8_t left_data_byte[2];
-  uint8_t right_data_byte[2];
-
-
-  left_data_byte[0] = DXL_LOBYTE(left_value);
-  left_data_byte[1] = DXL_HIBYTE(left_value);
-
-  dxl_addparam_result = groupSyncWritePWM_->addParam(left_wheel_id_, left_data_byte);
-
-  if (dxl_addparam_result != true){
-    //Borrar impresión cuando comprobemos
-    DEBUG_SERIAL.println("Fallo motor izquierdo");
-    return false;
-  }
-
-  right_data_byte[0] = DXL_LOBYTE(right_value);
-  right_data_byte[1] = DXL_HIBYTE(right_value);
-
-  dxl_addparam_result = groupSyncWritePWM_->addParam(right_wheel_id_, right_data_byte);
-  if (dxl_addparam_result != true){
-    //Borrar impresión cuando comprobemos
-    DEBUG_SERIAL.println("Fallo motor derecho");
-    return false;
-  }
-
-  dxl_comm_result = groupSyncWritePWM_->txPacket();
-
-  if (dxl_comm_result != COMM_SUCCESS)
-  {
-    Serial.println(packetHandler_->getTxRxResult(dxl_comm_result));
-    return false;
-  }
-
-  groupSyncWritePWM_->clearParam();
-  return true;
-}*/
-
 bool TurtleTorque3MotorDriver::controlMotor(float left_value, float right_value)
 {
   bool dxl_comm_result = false;
